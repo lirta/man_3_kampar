@@ -1,8 +1,12 @@
+import 'package:apps/model/guru/daftar_siswa_perkelas.dart';
+import 'package:apps/service/server.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 
 class DaftarSiswa extends StatelessWidget {
-  const DaftarSiswa({Key key}) : super(key: key);
+  // const DaftarSiswa({Key key}) : super(key: key);
+  DaftarSiswaPerkelasModel siswa;
+  DaftarSiswa(this.siswa);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +21,23 @@ class DaftarSiswa extends StatelessWidget {
             borderRadius: BorderRadius.circular(12), color: backgroundColor6),
         child: Row(
           children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.network(
+                  fotosiswaUrl + siswa.foto,
+                  width: 50,
+                  height: 50,
+                  // fit: BoxFit.cover,
+                )),
+            SizedBox(
+              width: 12,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nama Siswa",
+                    siswa.nama,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -33,7 +48,7 @@ class DaftarSiswa extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Nip",
+                    siswa.nis,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 18,

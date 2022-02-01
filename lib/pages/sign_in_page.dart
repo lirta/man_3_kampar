@@ -1,6 +1,8 @@
+import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key key}) : super(key: key);
@@ -10,7 +12,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController usernameController = TextEditingController(text: '');
 
   TextEditingController passwordController = TextEditingController(text: '');
 
@@ -19,28 +21,29 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     // AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
 
     handleSignIn() async {
       setState(() {
         isLoading = true;
       });
 
-      // if (await authProvider.login(
-      //   email: emailController.text,
-      //   password: passwordController.text,
-      // )) {
-      //   Navigator.pushNamed(context, '/home');
-      // } else {
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(
-      //       backgroundColor: alertColor,
-      //       content: Text(
-      //         'Gagal Login!',
-      //         textAlign: TextAlign.center,
-      //       ),
-      //     ),
-      //   );
-      // }
+      if (await authGuruProvider.login(
+        username: usernameController.text,
+        password: passwordController.text,
+      )) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: alertColor,
+            content: Text(
+              'Gagal Login!',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
 
       setState(() {
         isLoading = false;
@@ -72,7 +75,7 @@ class _SignInPageState extends State<SignInPage> {
       );
     }
 
-    Widget emailInput() {
+    Widget usernameInput() {
       return Container(
         margin: EdgeInsets.only(top: 70),
         child: Column(
@@ -111,9 +114,9 @@ class _SignInPageState extends State<SignInPage> {
                     Expanded(
                       child: TextFormField(
                         style: blackTextStyle,
-                        controller: emailController,
+                        controller: usernameController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Your Email Address',
+                          hintText: 'Nip',
                           hintStyle: subtitleTextStyle,
                         ),
                       ),
@@ -189,23 +192,29 @@ class _SignInPageState extends State<SignInPage> {
         width: double.infinity,
         margin: EdgeInsets.only(bottom: 30),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
-          //  handleSignIn,
+          onPressed:
+              // () {
+              //   Navigator.pushNamed(context, '/home');
+              // },
+              handleSignIn,
           style: TextButton.styleFrom(
             backgroundColor: biruColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: Text(
-            'Sign In',
-            style: primaryTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: medium,
-            ),
-          ),
+          child: isLoading == false
+              ? Text(
+                  'Sign In',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                )
+              : CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation(backgroundColor6),
+                ),
         ),
       );
     }
@@ -251,7 +260,7 @@ class _SignInPageState extends State<SignInPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               header(),
-              emailInput(),
+              usernameInput(),
               passwordInput(),
               // isLoading ? LoadingButton() :
               Spacer(),

@@ -1,6 +1,8 @@
+import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:apps/widget/daftar_siswa.dart';
 import 'package:apps/widget/daftar_tugas.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
@@ -9,45 +11,22 @@ class DaftarTugasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DaftarTugasProvider daftarTugasProvider =
+        Provider.of<DaftarTugasProvider>(context);
     Widget header() {
-      return Container(
-        margin: EdgeInsets.only(
-            top: defaultMargin, left: defaultMargin, right: defaultMargin),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hallo, Guru',
-                    style: primaryTextStyle.copyWith(
-                        fontSize: 24, fontWeight: semiBold),
-                  ),
-                  Text(
-                    'Nip guru',
-                    style: subtitleTextStyle.copyWith(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: AssetImage('assets/image_profile.png'))),
-            )
-          ],
-        ),
+      return AppBar(
+        backgroundColor: birumudaColor,
+        elevation: 0,
+        centerTitle: true,
+        // automaticallyImplyLeading: false,
+        title: Text('Daftar Tugas'),
       );
     }
 
     Widget daftarSiswaTitle() {
       return Container(
         margin: EdgeInsets.only(
-          top: defaultMargin,
+          top: 10,
           left: defaultMargin,
           right: defaultMargin,
         ),
@@ -85,23 +64,19 @@ class DaftarTugasPage extends StatelessWidget {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: Column(children: [
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-          DaftarTugas(),
-        ]),
+        child: daftarTugasProvider.d_tugas == null
+            ? Text("Tidak ada tugas")
+            : Column(
+                children: daftarTugasProvider.d_tugas
+                    .map((d_tugas) => DaftarTugas(d_tugas))
+                    .toList()),
       );
     }
 
     return Scaffold(
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
+      appBar: header(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -110,7 +85,7 @@ class DaftarTugasPage extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [header(), daftarSiswaTitle(), daftarSiswa()],
+              children: [daftarSiswaTitle(), daftarSiswa()],
             ),
           ),
         ),

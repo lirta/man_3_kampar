@@ -1,14 +1,21 @@
+import 'package:apps/model/guru/jadwal_model.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 
 class DaftarMapel extends StatelessWidget {
-  const DaftarMapel({Key key}) : super(key: key);
+  // const DaftarMapel(jadwal, {Key key}) : super(key: key);
+  JadwalModel jadwal;
+  DaftarMapel(this.jadwal);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail-mapel');
+        Navigator.pushNamed(context, '/detail-mapel', arguments: {
+          'id_kelas': jadwal.id_kls,
+          'id_mapel': jadwal.id_mapel,
+          'mapel': jadwal.mapel
+        });
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -22,7 +29,7 @@ class DaftarMapel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Matematika",
+                    jadwal.nama_kelas,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -33,7 +40,18 @@ class DaftarMapel extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Jam : 09.00 Wib",
+                    jadwal.mapel,
+                    // 'lirta',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 20,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    jadwal.jam_mulai + " - " + jadwal.jam_selesai,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,

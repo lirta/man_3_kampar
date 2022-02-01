@@ -1,17 +1,18 @@
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
-import 'package:apps/theme.dart';
+import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class DetailMapelPage extends StatefulWidget {
-  const DetailMapelPage({Key key}) : super(key: key);
+import '../../theme.dart';
+
+class TugasPage extends StatefulWidget {
+  const TugasPage({Key key}) : super(key: key);
 
   @override
-  _DetailMapelPageState createState() => _DetailMapelPageState();
+  _TugasPageState createState() => _TugasPageState();
 }
 
-class _DetailMapelPageState extends State<DetailMapelPage> {
+class _TugasPageState extends State<TugasPage> {
   @override
   Widget build(BuildContext context) {
     final args =
@@ -19,15 +20,15 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
     final _id_kls = args['id_kelas'];
     final _id_mapel = args['id_mapel'];
     final _mapel = args['mapel'];
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+    DaftarTugasProvider daftarTugasProvider =
+        Provider.of<DaftarTugasProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text(_mapel),
+        title: Text('Tugas $_mapel'),
       );
     }
 
@@ -41,7 +42,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
         child: Row(
           children: [
             Text(
-              _mapel + " /",
+              "Tugas /",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -75,9 +76,9 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
-              if (await daftarSiswaPerkelasProvider.getsiswaPerkelas(
-                  id: _id_kls)) {
-                Navigator.pushNamed(context, '/daftar-siswa');
+              if (await daftarTugasProvider.getdaftartugas(
+                  id_kelas: _id_kls, id_mapel: _id_mapel)) {
+                Navigator.pushNamed(context, '/daftar-tugas');
               }
             },
             child: Container(
@@ -102,7 +103,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Siswa ",
+                      "Daftar Tugas",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -115,11 +116,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/tugas', arguments: {
-                'id_kelas': _id_kls,
-                'id_mapel': _id_mapel,
-                'mapel': _mapel
-              });
+              // Navigator.pushNamed(context, '/add-tugas');
             },
             child: Container(
               margin: EdgeInsets.only(top: 20),
@@ -143,7 +140,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Tugas",
+                      "Add Tugas",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -153,44 +150,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                 ],
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/daftar-absensi');
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 100,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.pencilAlt,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Absensi",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 25,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          )
         ]),
       );
     }

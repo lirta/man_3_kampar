@@ -1,17 +1,15 @@
-import 'package:apps/model/guru/daftar_tugas_model.dart';
-import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 
-class DaftarTugas extends StatelessWidget {
-  // const DaftarTugas({Key key}) : super(key: key);
-  DaftarTugasModel d_tugas;
-  DaftarTugas(this.d_tugas);
+import '../theme.dart';
+
+class DaftarAbsenSiswa extends StatelessWidget {
+  const DaftarAbsenSiswa({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail-tugas');
+        Navigator.pushNamed(context, '/detail-absensi');
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -25,7 +23,7 @@ class DaftarTugas extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    d_tugas.jenis,
+                    "Nama Siswa",
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -36,18 +34,7 @@ class DaftarTugas extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    d_tugas.limit,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 18,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    d_tugas.file,
+                    "Nip",
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 18,

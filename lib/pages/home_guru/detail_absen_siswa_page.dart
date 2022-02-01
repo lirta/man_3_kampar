@@ -1,17 +1,15 @@
-import 'package:apps/widget/daftar_tugas.dart';
-import 'package:apps/widget/tugas_siswa.dart';
+import 'package:apps/widget/kehadiran_siswa.dart';
 import 'package:flutter/material.dart';
-
 import '../../theme.dart';
 
-class DetailTugasPage extends StatefulWidget {
-  const DetailTugasPage({Key key}) : super(key: key);
+class DetailAbsenSiswaPage extends StatefulWidget {
+  const DetailAbsenSiswaPage({Key key}) : super(key: key);
 
   @override
-  _DetailTugasPageState createState() => _DetailTugasPageState();
+  _DetailAbsenSiswaPageState createState() => _DetailAbsenSiswaPageState();
 }
 
-class _DetailTugasPageState extends State<DetailTugasPage> {
+class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -20,7 +18,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Detail Tugas'),
+        title: Text('Detail Absensi Siswa'),
       );
     }
 
@@ -34,7 +32,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         child: Row(
           children: [
             Text(
-              "Detail Tugas /",
+              "Detail Absensi Siswa /",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -62,7 +60,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
 
     Widget tugas() {
       return Container(
-        margin: EdgeInsets.only(top: defaultMargin),
+        margin: EdgeInsets.only(top: 10),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: secondaryColor,
@@ -72,67 +70,47 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Detail Tugas",
+              "Detail Absensi Siswa",
               style: primaryTextStyle.copyWith(fontWeight: semiBold),
             ),
             Divider(
               thickness: 1,
               color: Color(0Xff2e3141),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              'Jenis Tugas',
-              style: primaryTextStyle.copyWith(fontWeight: medium),
-              maxLines: 3,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "Ulangan",
-              style: subtitleTextStyle.copyWith(
-                fontSize: 12,
-                // fontWeight: medium
+            // SizedBox(
+            //   height: 5,
+            // ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(
+                'Nama',
+                style: primaryTextStyle.copyWith(fontWeight: medium),
+                maxLines: 3,
               ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              'Tanggal Di Kumpul',
-              style: primaryTextStyle.copyWith(fontWeight: medium),
-              maxLines: 3,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "20-2-2022",
-              style: subtitleTextStyle.copyWith(
-                fontSize: 12,
-                // fontWeight: medium
+              Text(
+                "Siswa",
+                style: subtitleTextStyle.copyWith(
+                  fontSize: 12,
+                  // fontWeight: medium
+                ),
               ),
-            ),
+            ]),
             SizedBox(
               height: 5,
             ),
-            Text(
-              'Deskripsi',
-              style: primaryTextStyle.copyWith(fontWeight: medium),
-              maxLines: 3,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              "Kerjakan Seendiri sendiri",
-              style: subtitleTextStyle.copyWith(
-                fontSize: 12,
-                // fontWeight: medium
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Text(
+                'Nis',
+                style: primaryTextStyle.copyWith(fontWeight: medium),
+                maxLines: 3,
               ),
-            ),
+              Text(
+                "Nis Siswa",
+                style: subtitleTextStyle.copyWith(
+                  fontSize: 12,
+                  // fontWeight: medium
+                ),
+              ),
+            ]),
           ],
         ),
       );
@@ -144,15 +122,15 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
           top: 14,
         ),
         child: Column(children: [
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          // DaftarTugas(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
+          KehadiranSiswa(),
         ]),
       );
     }
