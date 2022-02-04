@@ -190,7 +190,7 @@ class _SignInPageState extends State<SignInPage> {
       return Container(
         height: 50,
         width: double.infinity,
-        margin: EdgeInsets.only(bottom: 30),
+        margin: EdgeInsets.only(bottom: 30, top: 60),
         child: TextButton(
           onPressed:
               // () {
@@ -263,7 +263,7 @@ class _SignInPageState extends State<SignInPage> {
               usernameInput(),
               passwordInput(),
               // isLoading ? LoadingButton() :
-              Spacer(),
+              // Spacer(),
               signInButton(),
               // footer(),
             ],

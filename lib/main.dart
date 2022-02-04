@@ -14,6 +14,7 @@ import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
+import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/provider/page_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PageProvider()),
+        ChangeNotifierProvider(create: (context) => DaftarJawabanProvider()),
         ChangeNotifierProvider(create: (context) => DaftarTugasProvider()),
         ChangeNotifierProvider(
             create: (context) => DaftarSiswaPerkelasProvider()),
@@ -48,12 +50,12 @@ class MyApp extends StatelessWidget {
           '/sign-in': (context) => const SignInPage(),
           '/sign-up': (context) => const SingUpPage(),
           '/home': (context) => const MainPage(),
+          //root tugas guru
           '/daftar-mapel': (context) => const DaftarMapelPage(),
           '/detail-mapel': (context) => const DetailMapelPage(),
           '/daftar-siswa': (context) => const DaftarSiswaPage(),
           '/daftar-absensi': (context) => const DaftarAbsensiPage(),
           '/detail-absensi': (context) => const DetailAbsenSiswaPage(),
-          //root tugas guru
           '/tugas': (context) => const TugasPage(),
           '/daftar-tugas': (context) => const DaftarTugasPage(),
           '/detail-tugas': (context) => const DetailTugasPage(),

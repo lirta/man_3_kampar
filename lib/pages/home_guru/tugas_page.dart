@@ -116,7 +116,11 @@ class _TugasPageState extends State<TugasPage> {
           ),
           GestureDetector(
             onTap: () {
-              // Navigator.pushNamed(context, '/add-tugas');
+              Navigator.pushNamed(context, '/add-tugas', arguments: {
+                'id_kelas': _id_kls,
+                'id_mpl': _id_mapel,
+                'mapel': _mapel
+              });
             },
             child: Container(
               margin: EdgeInsets.only(top: 20),

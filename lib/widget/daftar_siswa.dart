@@ -12,7 +12,7 @@ class DaftarSiswa extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/detail-mapel');
+        // Navigator.pushNamed(context, '/detail-mapel');
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -21,14 +21,16 @@ class DaftarSiswa extends StatelessWidget {
             borderRadius: BorderRadius.circular(12), color: backgroundColor6),
         child: Row(
           children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  fotosiswaUrl + siswa.foto,
-                  width: 50,
-                  height: 50,
-                  // fit: BoxFit.cover,
-                )),
+            Expanded(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    fotosiswaUrl + siswa.foto,
+                    width: 50,
+                    height: 50,
+                    // fit: BoxFit.cover,
+                  )),
+            ),
             SizedBox(
               width: 12,
             ),

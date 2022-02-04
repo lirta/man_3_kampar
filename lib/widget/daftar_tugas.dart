@@ -1,6 +1,8 @@
 import 'package:apps/model/guru/daftar_tugas_model.dart';
+import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DaftarTugas extends StatelessWidget {
   // const DaftarTugas({Key key}) : super(key: key);
@@ -9,9 +11,13 @@ class DaftarTugas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DaftarJawabanProvider daftarJawabanProvider =
+        Provider.of<DaftarJawabanProvider>(context);
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/detail-tugas');
+      onTap: () async {
+        if (await daftarJawabanProvider.getjawaban(id: d_tugas.id_soal)) {
+          Navigator.pushNamed(context, '/detail-tugas');
+        }
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),

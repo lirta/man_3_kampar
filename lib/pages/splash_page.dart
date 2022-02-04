@@ -22,15 +22,15 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
-      backgroundColor: backgroundColor6,
+      backgroundColor: birumudaColor,
       body: Center(
         child: Container(
-          width: 130,
-          height: 150,
+          width: 230,
+          height: 250,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
-                'assets/image_splash.png',
+                'assets/logo_man.png',
               ),
             ),
           ),

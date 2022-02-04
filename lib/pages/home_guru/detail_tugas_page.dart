@@ -1,6 +1,8 @@
+import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/widget/daftar_tugas.dart';
 import 'package:apps/widget/tugas_siswa.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
@@ -14,6 +16,8 @@ class DetailTugasPage extends StatefulWidget {
 class _DetailTugasPageState extends State<DetailTugasPage> {
   @override
   Widget build(BuildContext context) {
+    DaftarJawabanProvider daftarJawabanProvider =
+        Provider.of<DaftarJawabanProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -143,17 +147,24 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: Column(children: [
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          TugasSiswa(),
-          // DaftarTugas(),
-        ]),
+        child: daftarJawabanProvider.jawaban == null
+            ? Text("Tidah ada data Jawaban")
+            : Column(
+                children: daftarJawabanProvider.jawaban
+                    .map((jawaban) => TugasSiswa(jawaban))
+                    .toList(),
+                //  [
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   TugasSiswa(),
+                //   // DaftarTugas(),
+                // ]
+              ),
       );
     }
 
