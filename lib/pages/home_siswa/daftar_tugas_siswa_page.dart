@@ -1,26 +1,29 @@
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
-import 'package:apps/theme.dart';
-import 'package:apps/widget/daftar_siswa.dart';
+import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
+import 'package:apps/widget/daftar_tugas_siswa.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DaftarSiswaPage extends StatelessWidget {
-  const DaftarSiswaPage({Key key}) : super(key: key);
+import '../../theme.dart';
+
+class DaftarTugasSiswaPage extends StatefulWidget {
+  const DaftarTugasSiswaPage({Key key}) : super(key: key);
 
   @override
+  _DaftarTugasSiswaPageState createState() => _DaftarTugasSiswaPageState();
+}
+
+class _DaftarTugasSiswaPageState extends State<DaftarTugasSiswaPage> {
+  @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final _id_mapel = args['id_mapel'];
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
+        Provider.of<DaftarTugasSiswaProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Daftar Siswa'),
+        title: Text('Daftar Tugas'),
       );
     }
 
@@ -34,7 +37,7 @@ class DaftarSiswaPage extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              "Daftar Siswa /",
+              "Daftar Tugas /",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -65,24 +68,12 @@ class DaftarSiswaPage extends StatelessWidget {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: daftarSiswaPerkelasProvider.siswa == null
-            ? Text("Tidak ada siswa")
+        child: daftarTugasSiswaProvider.tugas_siswa == null
+            ? Text("Tidak ada tugas")
             : Column(
-                children: daftarSiswaPerkelasProvider.siswa
-                    .map((siswa) => DaftarSiswa(siswa, _id_mapel))
-                    .toList(),
-                //  [
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                // ]
-              ),
+                children: daftarTugasSiswaProvider.tugas_siswa
+                    .map((tugas_siswa) => DaftarTugasSiswa(tugas_siswa))
+                    .toList()),
       );
     }
 

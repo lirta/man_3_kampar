@@ -1,25 +1,26 @@
-import 'package:apps/provider/guru/absen_siswa_provider.dart';
-import 'package:apps/widget/kehadiran_siswa.dart';
+import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
+import 'package:apps/service/daftar_absen_siswa.dart';
+import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../theme.dart';
 
-class DetailAbsenSiswaPage extends StatefulWidget {
-  const DetailAbsenSiswaPage({Key key}) : super(key: key);
+class DaftarAbsenSiswaPage extends StatefulWidget {
+  const DaftarAbsenSiswaPage({Key key}) : super(key: key);
 
   @override
-  _DetailAbsenSiswaPageState createState() => _DetailAbsenSiswaPageState();
+  _DaftarAbsenSiswaPageState createState() => _DaftarAbsenSiswaPageState();
 }
 
-class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
+class _DaftarAbsenSiswaPageState extends State<DaftarAbsenSiswaPage> {
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final _nama = args['nama'];
-    final _nis = args['nis'];
-    AbsenSiswaProvider absenSiswaProvider =
-        Provider.of<AbsenSiswaProvider>(context);
+    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
+        Provider.of<DaftarAbsenSiswaProvider>(context);
+    AuthSiswaProvider authSiswaProvider =
+        Provider.of<AuthSiswaProvider>(context);
+    SiswaModel siswa = authSiswaProvider.siswa;
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -95,7 +96,7 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
                 maxLines: 3,
               ),
               Text(
-                _nama,
+                siswa.nama,
                 style: subtitleTextStyle.copyWith(
                   fontSize: 12,
                   // fontWeight: medium
@@ -112,7 +113,7 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
                 maxLines: 3,
               ),
               Text(
-                _nis,
+                siswa.nis,
                 style: subtitleTextStyle.copyWith(
                   fontSize: 12,
                   // fontWeight: medium
@@ -129,11 +130,11 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: absenSiswaProvider.absen == null
+        child: daftarAbsenSiswaProvider.absen_siswa == null
             ? Text("belum ada Data Absen")
             : Column(
-                children: absenSiswaProvider.absen
-                    .map((absen) => KehadiranSiswa(absen))
+                children: daftarAbsenSiswaProvider.absen_siswa
+                    .map((absen_siswa) => DaftarSiswaAbsen(absen_siswa))
                     .toList(),
                 //  [
                 //   KehadiranSiswa(),

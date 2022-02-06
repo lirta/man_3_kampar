@@ -1,6 +1,8 @@
+import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/widget/daftar_absen_siswa.dart';
 import 'package:apps/widget/daftar_siswa.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
@@ -14,6 +16,12 @@ class DaftarAbsensiPage extends StatefulWidget {
 class _DaftarAbsensiPageState extends State<DaftarAbsensiPage> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    final _id_mapel = args['id_mapel'];
+    final _id_kelas = args['id_kelas'];
+    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
+        Provider.of<DaftarSiswaPerkelasProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -65,17 +73,25 @@ class _DaftarAbsensiPageState extends State<DaftarAbsensiPage> {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: Column(children: [
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-          DaftarAbsenSiswa(),
-        ]),
+        child: daftarSiswaPerkelasProvider.siswa == null
+            ? Text("Tidak ada siswa")
+            : Column(
+                children: daftarSiswaPerkelasProvider.siswa
+                    .map((siswa) =>
+                        DaftarAbsenSiswa(siswa, _id_mapel, _id_kelas))
+                    .toList(),
+                //      [
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                //   DaftarAbsenSiswa(),
+                // ]
+              ),
       );
     }
 

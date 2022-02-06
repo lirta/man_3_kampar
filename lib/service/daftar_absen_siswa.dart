@@ -1,12 +1,13 @@
 import 'package:apps/model/guru/absen_seswa_model.dart';
+import 'package:apps/model/siswa/daftar_absen_siswa_model.dart';
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
 
-class KehadiranSiswa extends StatelessWidget {
-  // const KehadiranSiswa({Key key}) : super(key: key);
-  AbsenSiswaModel absen;
-  KehadiranSiswa(this.absen);
+class DaftarSiswaAbsen extends StatelessWidget {
+  // const DaftarSiswaAbsen({Key key}) : super(key: key);
+  DaftarAbsenSiswaModel absen_siswa;
+  DaftarSiswaAbsen(this.absen_siswa);
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +20,18 @@ class KehadiranSiswa extends StatelessWidget {
         padding: EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: absen.absen == "Hadir"
+            color: absen_siswa.absen == "Hadir"
                 ? hadir
-                : absen.absen == "Izin"
+                : absen_siswa.absen == "Izin"
                     ? izin
-                    : absen.absen == "Sakit"
+                    : absen_siswa.absen == "Sakit"
                         ? sakit
                         : alpa),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              absen.tgl,
+              absen_siswa.tgl,
               // 'lirta',
               style: blackTextStyle.copyWith(
                 fontSize: 20,
@@ -38,7 +39,7 @@ class KehadiranSiswa extends StatelessWidget {
               ),
             ),
             Text(
-              absen.absen,
+              absen_siswa.absen,
               // 'lirta',
               style: blackTextStyle.copyWith(
                 fontSize: 20,

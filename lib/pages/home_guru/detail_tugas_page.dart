@@ -16,6 +16,11 @@ class DetailTugasPage extends StatefulWidget {
 class _DetailTugasPageState extends State<DetailTugasPage> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    final _jenis = args['jenis'];
+    final _file = args['file'];
+    final _limit = args['tgl_kumpel'];
     DaftarJawabanProvider daftarJawabanProvider =
         Provider.of<DaftarJawabanProvider>(context);
     Widget header() {
@@ -95,7 +100,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              "Ulangan",
+              _jenis,
               style: subtitleTextStyle.copyWith(
                 fontSize: 12,
                 // fontWeight: medium
@@ -113,7 +118,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              "20-2-2022",
+              _limit,
               style: subtitleTextStyle.copyWith(
                 fontSize: 12,
                 // fontWeight: medium
@@ -123,7 +128,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              'Deskripsi',
+              'File Tugas',
               style: primaryTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
@@ -131,7 +136,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              "Kerjakan Seendiri sendiri",
+              _file,
               style: subtitleTextStyle.copyWith(
                 fontSize: 12,
                 // fontWeight: medium

@@ -1,17 +1,20 @@
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
+import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class DetailMapelPage extends StatefulWidget {
-  const DetailMapelPage({Key key}) : super(key: key);
+class DetailMapelSiswaPage extends StatefulWidget {
+  const DetailMapelSiswaPage({Key key}) : super(key: key);
 
   @override
-  _DetailMapelPageState createState() => _DetailMapelPageState();
+  _DetailMapelSiswaPageState createState() => _DetailMapelSiswaPageState();
 }
 
-class _DetailMapelPageState extends State<DetailMapelPage> {
+class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
   @override
   Widget build(BuildContext context) {
     final args =
@@ -19,8 +22,13 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
     final _id_kls = args['id_kelas'];
     final _id_mapel = args['id_mapel'];
     final _mapel = args['mapel'];
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
+        Provider.of<DaftarTugasSiswaProvider>(context);
+    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
+        Provider.of<DaftarAbsenSiswaProvider>(context);
+    AuthSiswaProvider authSiswaProvider =
+        Provider.of<AuthSiswaProvider>(context);
+    SiswaModel siswa = authSiswaProvider.siswa;
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -75,10 +83,10 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
-              if (await daftarSiswaPerkelasProvider.getsiswaPerkelas(
-                  id: _id_kls)) {
-                Navigator.pushNamed(context, '/daftar-siswa',
-                    arguments: {'id_mapel': _id_mapel});
+              if (await daftarAbsenSiswaProvider.getabsen(
+                  id_siswa: siswa.nis, id_matapelajaran: _id_mapel)) {
+                Navigator.pushNamed(context, "/detail-absen-siswa",
+                    arguments: {'nama': siswa.nama, 'nis': siswa.nis});
               }
             },
             child: Container(
@@ -103,7 +111,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Siswa ",
+                      "Absensi ",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -115,12 +123,16 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/tugas', arguments: {
-                'id_kelas': _id_kls,
-                'id_mapel': _id_mapel,
-                'mapel': _mapel
-              });
+            onTap: () async {
+              if (await daftarTugasSiswaProvider.getdaftartugas(
+                  id_kelas: _id_kls, id_mapel: _id_mapel)) {
+                Navigator.pushNamed(context, '/daftar-tugas-siswa');
+              }
+              // Navigator.pushNamed(context, '/tugas', arguments: {
+              //   'id_kelas': _id_kls,
+              //   'id_mapel': _id_mapel,
+              //   'mapel': _mapel
+              // });
             },
             child: Container(
               margin: EdgeInsets.only(top: 20),
@@ -144,49 +156,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Tugas",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 25,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              if (await daftarSiswaPerkelasProvider.getsiswaPerkelas(
-                  id: _id_kls)) {
-                Navigator.pushNamed(context, '/daftar-absensi',
-                    arguments: {'id_mapel': _id_mapel, 'id_kelas': _id_kls});
-              }
-              // Navigator.pushNamed(context, '/daftar-absensi');
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 100,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.pencilAlt,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Absensi",
+                      "Dafatar Tugas",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,

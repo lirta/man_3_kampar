@@ -1,25 +1,41 @@
-import 'package:apps/model/guru/daftar_tugas_model.dart';
-import 'package:apps/provider/guru/jawaban_provider.dart';
-import 'package:apps/theme.dart';
+import 'package:apps/model/siswa/daftar_tugas_siswa_model.dart';
+import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DaftarTugas extends StatelessWidget {
-  // const DaftarTugas({Key key}) : super(key: key);
-  DaftarTugasModel d_tugas;
-  DaftarTugas(this.d_tugas);
+import '../theme.dart';
+
+class DaftarTugasSiswa extends StatelessWidget {
+  // const DaftarTugasSiswa({ Key key }) : super(key: key);
+  DaftarTugasSiswaModel tugas_siswa;
+  DaftarTugasSiswa(this.tugas_siswa);
 
   @override
   Widget build(BuildContext context) {
-    DaftarJawabanProvider daftarJawabanProvider =
-        Provider.of<DaftarJawabanProvider>(context);
+    SiswaJawabanProvider siswaJawabanProvider =
+        Provider.of<SiswaJawabanProvider>(context);
+    AuthSiswaProvider authSiswaProvider =
+        Provider.of<AuthSiswaProvider>(context);
+    SiswaModel siswa = authSiswaProvider.siswa;
     return GestureDetector(
       onTap: () async {
-        if (await daftarJawabanProvider.getjawaban(id: d_tugas.id_soal)) {
-          Navigator.pushNamed(context, '/detail-tugas', arguments: {
-            'jenis': d_tugas.jenis,
-            'file': d_tugas.file,
-            'tgl_kumpel': d_tugas.limit
+        if (await siswaJawabanProvider.getjawaban(
+            id: tugas_siswa.id_soal, id_siswa: siswa.id)) {
+          Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
+            'jenis': tugas_siswa.jenis,
+            'file': tugas_siswa.file,
+            'tgl_kumpel': tugas_siswa.limit,
+            'id_soal': tugas_siswa.id_soal,
+          });
+        } else {
+          print("gagal");
+          Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
+            'jenis': tugas_siswa.jenis,
+            'file': tugas_siswa.file,
+            'tgl_kumpel': tugas_siswa.limit,
+            'id_soal': tugas_siswa.id_soal,
           });
         }
       },
@@ -35,7 +51,7 @@ class DaftarTugas extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    d_tugas.jenis,
+                    tugas_siswa.jenis,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -46,7 +62,7 @@ class DaftarTugas extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    d_tugas.limit,
+                    tugas_siswa.limit,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
@@ -57,7 +73,7 @@ class DaftarTugas extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    d_tugas.file,
+                    tugas_siswa.file,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 18,

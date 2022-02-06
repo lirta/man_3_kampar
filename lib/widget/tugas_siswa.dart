@@ -1,10 +1,15 @@
 import 'package:apps/model/guru/daftar_jawaban.dart';
+import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/service/server.dart';
 import 'package:dio/dio.dart';
 import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:intl/number_symbols_data.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
@@ -12,11 +17,99 @@ class TugasSiswa extends StatelessWidget {
   // const TugasSiswa({Key key}) : super(key: key);
   DaftarJawabanModel jawaban;
   TugasSiswa(this.jawaban);
+  TextEditingController nilaiController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
+    DaftarJawabanProvider daftarJawabanProvider =
+        Provider.of<DaftarJawabanProvider>(context);
     String id = jawaban.id_jawaban;
     String url = jawabanUrl + jawaban.jawaban;
+    addnilai() async {
+      if (nilaiController.text != null) {
+        var url = '$baseUrl' + 'soal_guru/nilai_jawaban/$id';
+        var response = await http
+            .post(Uri.parse(url), body: {'nilai': nilaiController.text});
+        if (response.statusCode == 200) {
+          print('update berhasil');
+          Navigator.of(context).pop();
+        }
+      }
+    }
+
+    Widget nilaiInput() {
+      return Container(
+        margin: EdgeInsets.only(top: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 50,
+              padding: EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Row(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.penFancy,
+                      size: 15,
+                      color: birutuaColor,
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        style: blackTextStyle,
+                        controller: nilaiController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Nilai',
+                          hintStyle: subtitleTextStyle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget _buildPopupDialog(BuildContext context) {
+      return new AlertDialog(
+        title: const Text('Add Nilai'),
+        content: new Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[nilaiInput()],
+        ),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              addnilai();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: const Text('Submit'),
+          ),
+          FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            textColor: Theme.of(context).primaryColor,
+            child: Icon(FontAwesomeIcons.windowClose),
+          ),
+        ],
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         // Navigator.pushNamed(context, '/detail-mapel');
@@ -88,15 +181,45 @@ class TugasSiswa extends StatelessWidget {
                           fontWeight: semiBold,
                         ),
                       ),
-                      Text(
-                        jawaban.nilai == null || jawaban.nilai == ""
-                            ? 'Belum ada nilai'
-                            : jawaban.nilai,
-                        // 'lirta',
-                        style: blackTextStyle.copyWith(
-                          fontSize: 18,
-                          fontWeight: semiBold,
-                        ),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            jawaban.nilai == null
+                                ? 'Belum ada nilai'
+                                : jawaban.nilai,
+                            // 'lirta',
+                            style: blackTextStyle.copyWith(
+                              fontSize: 18,
+                              fontWeight: semiBold,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100,
+                          ),
+                          Container(
+                            // padding: EdgeInsets.only(left: 10),
+                            height: 40,
+                            width: 80,
+                            child: TextButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(context),
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                  backgroundColor: biruColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12))),
+                              child: Text(
+                                'Add Nilai',
+                                style: primaryTextStyle,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -133,6 +256,7 @@ class TugasSiswa extends StatelessWidget {
                               }
                             });
                             print("File is saved to download folder.");
+                            print('berhasil');
                           } on DioError catch (e) {
                             print(e.message);
                           }

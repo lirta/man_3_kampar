@@ -22,6 +22,11 @@ Color secondaryTextColor = Color(0xff999999);
 Color subtitleColor = Color(0xff504F5E);
 Color transparentColor = Colors.transparent;
 Color blackColor = Color(0xff2E2E2E);
+//warna absen
+Color hadir = Color(0xffCDE1F8);
+Color izin = Color(0xffDBF8CD);
+Color sakit = Color(0xffEDCDF8);
+Color alpa = Color(0xffF84C4C);
 
 TextStyle primaryTextStyle = GoogleFonts.poppins(
   color: primaryTextColor,

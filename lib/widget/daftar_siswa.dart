@@ -1,17 +1,27 @@
 import 'package:apps/model/guru/daftar_siswa_perkelas.dart';
+import 'package:apps/provider/guru/absen_siswa_provider.dart';
 import 'package:apps/service/server.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DaftarSiswa extends StatelessWidget {
   // const DaftarSiswa({Key key}) : super(key: key);
   DaftarSiswaPerkelasModel siswa;
-  DaftarSiswa(this.siswa);
-
+  String id_mapel;
+  DaftarSiswa(this.siswa, this.id_mapel);
   @override
   Widget build(BuildContext context) {
+    String _id_siswa = siswa.id_siswa;
+    AbsenSiswaProvider absenSiswaProvider =
+        Provider.of<AbsenSiswaProvider>(context);
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        if (await absenSiswaProvider.getabsen(
+            id_siswa: _id_siswa, id_matapelajaran: id_mapel)) {
+          Navigator.pushNamed(context, "/detail-absensi",
+              arguments: {'nama': siswa.nama, 'nis': siswa.nis});
+        }
         // Navigator.pushNamed(context, '/detail-mapel');
       },
       child: Container(
@@ -32,19 +42,21 @@ class DaftarSiswa extends StatelessWidget {
                   )),
             ),
             SizedBox(
-              width: 12,
+              width: 10,
             ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    // id_mapel,
                     siswa.nama,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
                       fontWeight: semiBold,
                     ),
+                    maxLines: 2,
                   ),
                   SizedBox(
                     height: 5,

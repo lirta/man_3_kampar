@@ -1,17 +1,17 @@
-import 'package:apps/provider/guru/auth_guru_provider.dart';
+import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key key}) : super(key: key);
+class SignInSiswaPage extends StatefulWidget {
+  const SignInSiswaPage({Key key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignInSiswaPage> createState() => _SignInSiswaPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInSiswaPageState extends State<SignInSiswaPage> {
   TextEditingController usernameController = TextEditingController(text: '');
 
   TextEditingController passwordController = TextEditingController(text: '');
@@ -21,18 +21,19 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     // AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
+    AuthSiswaProvider authSiswaProvider =
+        Provider.of<AuthSiswaProvider>(context);
 
     handleSignIn() async {
       setState(() {
         isLoading = true;
       });
 
-      if (await authGuruProvider.login(
+      if (await authSiswaProvider.login(
         username: usernameController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/home-siswa');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -67,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
               height: 2,
             ),
             Text(
-              'Sign In to Teacher',
+              'Sign In to Students',
               style: subtitleTextStyle.copyWith(fontSize: 15),
             ),
           ],
@@ -82,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Nis / Nip',
+              'Nis',
               style: blackTextStyle.copyWith(
                 fontSize: 16,
                 fontWeight: medium,
@@ -116,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                         style: blackTextStyle,
                         controller: usernameController,
                         decoration: InputDecoration.collapsed(
-                          hintText: 'Nip',
+                          hintText: 'Your NIS',
                           hintStyle: subtitleTextStyle,
                         ),
                       ),

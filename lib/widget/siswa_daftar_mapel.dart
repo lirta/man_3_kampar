@@ -1,27 +1,22 @@
-import 'package:apps/model/guru/daftar_tugas_model.dart';
-import 'package:apps/provider/guru/jawaban_provider.dart';
-import 'package:apps/theme.dart';
+import 'package:apps/model/siswa/siswa_daftar_mapel_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class DaftarTugas extends StatelessWidget {
-  // const DaftarTugas({Key key}) : super(key: key);
-  DaftarTugasModel d_tugas;
-  DaftarTugas(this.d_tugas);
+import '../theme.dart';
+
+class SiswaDaftarMapel extends StatelessWidget {
+  // const SiswaDaftarMapel({Key key}) : super(key: key);
+  SiswaDaftarMapelModel mapel;
+  SiswaDaftarMapel(this.mapel);
 
   @override
   Widget build(BuildContext context) {
-    DaftarJawabanProvider daftarJawabanProvider =
-        Provider.of<DaftarJawabanProvider>(context);
     return GestureDetector(
-      onTap: () async {
-        if (await daftarJawabanProvider.getjawaban(id: d_tugas.id_soal)) {
-          Navigator.pushNamed(context, '/detail-tugas', arguments: {
-            'jenis': d_tugas.jenis,
-            'file': d_tugas.file,
-            'tgl_kumpel': d_tugas.limit
-          });
-        }
+      onTap: () {
+        Navigator.pushNamed(context, '/detail-mapel-siswa', arguments: {
+          'id_kelas': mapel.id_kls,
+          'id_mapel': mapel.id_mapel,
+          'mapel': mapel.mapel
+        });
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -35,7 +30,7 @@ class DaftarTugas extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    d_tugas.jenis,
+                    mapel.nama_kelas,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -46,10 +41,10 @@ class DaftarTugas extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    d_tugas.limit,
+                    mapel.mapel,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: semiBold,
                     ),
                   ),
@@ -57,10 +52,10 @@ class DaftarTugas extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    d_tugas.file,
+                    mapel.jam_mulai + " - " + mapel.jam_selesai,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: semiBold,
                     ),
                   ),
