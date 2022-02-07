@@ -31,12 +31,12 @@ class DaftarTugasSiswa extends StatelessWidget {
           });
         } else {
           print("gagal");
-          Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
-            'jenis': tugas_siswa.jenis,
-            'file': tugas_siswa.file,
-            'tgl_kumpel': tugas_siswa.limit,
-            'id_soal': tugas_siswa.id_soal,
-          });
+          // Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
+          //   'jenis': tugas_siswa.jenis,
+          //   'file': tugas_siswa.file,
+          //   'tgl_kumpel': tugas_siswa.limit,
+          //   'id_soal': tugas_siswa.id_soal,
+          // });
         }
       },
       child: Container(

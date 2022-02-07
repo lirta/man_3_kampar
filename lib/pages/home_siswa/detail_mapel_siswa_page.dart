@@ -60,7 +60,7 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',
@@ -156,7 +156,7 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Dafatar Tugas",
+                      "Daftar Tugas",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,

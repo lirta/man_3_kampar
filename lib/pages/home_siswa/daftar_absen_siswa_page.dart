@@ -52,7 +52,7 @@ class _DaftarAbsenSiswaPageState extends State<DaftarAbsenSiswaPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',

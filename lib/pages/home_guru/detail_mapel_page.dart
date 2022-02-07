@@ -162,7 +162,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                 Navigator.pushNamed(context, '/daftar-absensi',
                     arguments: {'id_mapel': _id_mapel, 'id_kelas': _id_kls});
               }
-              // Navigator.pushNamed(context, '/daftar-absensi');
+              // Navigator.pushNamed(context, ' /daftar-absensi');
             },
             child: Container(
               margin: EdgeInsets.only(top: 20),

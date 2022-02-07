@@ -83,7 +83,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',
@@ -181,7 +181,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         margin: EdgeInsets.only(top: defaultMargin),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: secondaryColor,
+          color: birutuaColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -200,7 +200,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
             ),
             Text(
               'File',
-              style: primaryTextStyle.copyWith(fontWeight: medium),
+              style: subtitleTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
             SizedBox(
@@ -208,7 +208,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
             ),
             Text(
               jawaban_siswa.jawaban,
-              style: subtitleTextStyle.copyWith(
+              style: primaryTextStyle.copyWith(
                 fontSize: 12,
                 // fontWeight: medium
               ),
@@ -218,38 +218,23 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
             ),
             Text(
               'Nilai',
-              style: primaryTextStyle.copyWith(fontWeight: medium),
+              style: subtitleTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              _limit,
-              style: subtitleTextStyle.copyWith(
-                fontSize: 12,
-                // fontWeight: medium
-              ),
             ),
             SizedBox(
               height: 5,
             ),
             Text(
               jawaban_siswa.nilai == null || jawaban_siswa.nilai == ""
-                  ? 'Belum ada nilai'
+                  ? 'Belum Di Nilai'
                   : jawaban_siswa.nilai,
-              style: primaryTextStyle.copyWith(fontWeight: medium),
-              maxLines: 3,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              _file,
-              style: subtitleTextStyle.copyWith(
+              style: primaryTextStyle.copyWith(
                 fontSize: 12,
                 // fontWeight: medium
               ),
+            ),
+            SizedBox(
+              height: 5,
             ),
           ],
         ),

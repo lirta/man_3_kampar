@@ -48,7 +48,7 @@ class _SiswaDaftarMapelPageState extends State<SiswaDaftarMapelPage> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',

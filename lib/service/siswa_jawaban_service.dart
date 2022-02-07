@@ -11,13 +11,19 @@ class SiswaJawabanService {
     var response = await http.get(Uri.parse(url));
     // print(response.body);
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body)['user'];
+      // print(jsonDecode(response.body)['jawaban']);
+      print(1);
+      var data = jsonDecode(response.body)['jawaban'];
+      print(2);
+      // print("ini data" + data);
       SiswaJawabanModel jawaban_siswa = SiswaJawabanModel.fromJson(data);
-      print(jawaban_siswa);
+      print(3);
+      // print('ini jawaban siswa' + jawaban_siswa.toString());
+      // print(jawaban_siswa.jawaban);
 
       return jawaban_siswa;
     } else {
-      print('gagal');
+      // print('gagal');
     }
   }
 }
