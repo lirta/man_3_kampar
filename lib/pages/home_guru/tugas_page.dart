@@ -1,6 +1,7 @@
 import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme.dart';
@@ -13,6 +14,7 @@ class TugasPage extends StatefulWidget {
 }
 
 class _TugasPageState extends State<TugasPage> {
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     final args =
@@ -22,6 +24,21 @@ class _TugasPageState extends State<TugasPage> {
     final _mapel = args['mapel'];
     DaftarTugasProvider daftarTugasProvider =
         Provider.of<DaftarTugasProvider>(context);
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -76,8 +93,10 @@ class _TugasPageState extends State<TugasPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await daftarTugasProvider.getdaftartugas(
                   id_kelas: _id_kls, id_mapel: _id_mapel)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-tugas');
               }
             },

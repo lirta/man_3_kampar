@@ -2,6 +2,7 @@ import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 class DetailMapelPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class DetailMapelPage extends StatefulWidget {
 }
 
 class _DetailMapelPageState extends State<DetailMapelPage> {
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     final args =
@@ -21,6 +23,21 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
     final _mapel = args['mapel'];
     DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
         Provider.of<DaftarSiswaPerkelasProvider>(context);
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
@@ -75,8 +92,10 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await daftarSiswaPerkelasProvider.getsiswaPerkelas(
                   id: _id_kls)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-siswa',
                     arguments: {'id_mapel': _id_mapel});
               }
@@ -157,8 +176,10 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await daftarSiswaPerkelasProvider.getsiswaPerkelas(
                   id: _id_kls)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-absensi',
                     arguments: {'id_mapel': _id_mapel, 'id_kelas': _id_kls});
               }

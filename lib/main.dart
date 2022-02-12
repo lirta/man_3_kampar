@@ -9,6 +9,7 @@ import 'package:apps/pages/home_guru/detail_mapel_page.dart';
 import 'package:apps/pages/home_guru/main_page.dart';
 import 'package:apps/pages/home_guru/tugas_page.dart';
 import 'package:apps/pages/home_siswa/daftar_absen_siswa_page.dart';
+import 'package:apps/pages/home_siswa/daftar_nilai_siswa_page.dart';
 import 'package:apps/pages/home_siswa/daftar_tugas_siswa_page.dart';
 import 'package:apps/pages/home_siswa/detail_tugas_siswa_page.dart';
 import 'package:apps/pages/home_siswa/main_page_siswa.dart';
@@ -27,6 +28,7 @@ import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/provider/page_provider.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_nilai_provider.dart';
 import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
@@ -35,6 +37,7 @@ import 'package:provider/provider.dart';
 
 import 'pages/home_guru/detail_tugas_page.dart';
 import 'pages/home_siswa/detail_mapel_siswa_page.dart';
+import 'widget/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +52,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PageProvider()),
+        ChangeNotifierProvider(create: (context) => DaftarNilaiProvider()),
         ChangeNotifierProvider(create: (context) => SiswaJawabanProvider()),
         ChangeNotifierProvider(create: (context) => DaftarAbsenSiswaProvider()),
         ChangeNotifierProvider(create: (context) => DaftarTugasSiswaProvider()),
@@ -68,10 +72,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (context) => const SplashPage(),
+          // '/sc': (context) => SplashScreen(),
           '/splash-login': (context) => const SplashLoginPage(),
           '/sign-in': (context) => const SignInPage(),
           '/sign-in-siswa': (context) => const SignInSiswaPage(),
-          '/sign-up': (context) => const SingUpPage(),
+          '/nilai-siswa': (context) => const DaftarNilaiSiswaPage(),
           '/home-siswa': (context) => const MainPageSiswa(),
           '/daftar-mapel-siswa': (context) => const SiswaDaftarMapelPage(),
           '/detail-mapel-siswa': (context) => const DetailMapelSiswaPage(),

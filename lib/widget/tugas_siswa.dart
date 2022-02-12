@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../theme.dart';
@@ -18,19 +19,36 @@ class TugasSiswa extends StatelessWidget {
   DaftarJawabanModel jawaban;
   TugasSiswa(this.jawaban);
   TextEditingController nilaiController = TextEditingController(text: '');
-
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     DaftarJawabanProvider daftarJawabanProvider =
         Provider.of<DaftarJawabanProvider>(context);
     String id = jawaban.id_jawaban;
     String url = jawabanUrl + jawaban.jawaban;
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     addnilai() async {
+      pr.show();
       if (nilaiController.text != null) {
         var url = '$baseUrl' + 'soal_guru/nilai_jawaban/$id';
         var response = await http
             .post(Uri.parse(url), body: {'nilai': nilaiController.text});
         if (response.statusCode == 200) {
+          pr.hide();
           print('update berhasil');
           Navigator.of(context).pop();
         }
@@ -232,6 +250,7 @@ class TugasSiswa extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
+                      pr.show();
                       Map<Permission, PermissionStatus> statuses = await [
                         Permission.storage,
                         //add more permission to request here.
@@ -256,12 +275,15 @@ class TugasSiswa extends StatelessWidget {
                               }
                             });
                             print("File is saved to download folder.");
+                            pr.hide();
                             print('berhasil');
                           } on DioError catch (e) {
+                            pr.hide();
                             print(e.message);
                           }
                         }
                       } else {
+                        pr.hide();
                         print("No permission to read and write.");
                       }
                       // var url = '$baseUrl' + 'jawaban/$id/download';

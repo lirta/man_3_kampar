@@ -5,7 +5,9 @@ import 'package:apps/service/server.dart';
 import 'package:apps/theme.dart';
 // import 'package:apps/widget/daftar_hari.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -16,11 +18,45 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+  String akses;
+  ProgressDialog pr;
+  // void initState() {
+  //   cekUser();
+  //   super.initState();
+  // }
+
+  // cekUser() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   akses = prefs.getString("akses");
+  //   if (akses != "2") {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.remove("id");
+  //     prefs.setBool("is_login", false);
+  //     Navigator.pushNamedAndRemoveUntil(
+  //         context, '/splash-login', (route) => false);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -64,7 +100,7 @@ class _HomePageState extends State<HomePage> {
           right: defaultMargin,
         ),
         child: Text(
-          'Daftar Hari Mengajar',
+          'Daftar Mengajar',
           style: subtitleTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semiBold,
@@ -79,9 +115,12 @@ class _HomePageState extends State<HomePage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Senin", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -118,9 +157,12 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Selasa", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -157,9 +199,12 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Rabu", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -196,9 +241,12 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Kamis", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -235,9 +283,12 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Jumat", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -274,9 +325,12 @@ class _HomePageState extends State<HomePage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await jadwalProvider.getjadwal(hari: "Sabtu", id: guru.id)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,

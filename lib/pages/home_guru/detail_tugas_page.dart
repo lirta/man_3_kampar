@@ -2,6 +2,7 @@ import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/widget/daftar_tugas.dart';
 import 'package:apps/widget/tugas_siswa.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme.dart';
@@ -14,6 +15,7 @@ class DetailTugasPage extends StatefulWidget {
 }
 
 class _DetailTugasPageState extends State<DetailTugasPage> {
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     final args =
@@ -23,6 +25,21 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
     final _limit = args['tgl_kumpel'];
     DaftarJawabanProvider daftarJawabanProvider =
         Provider.of<DaftarJawabanProvider>(context);
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,

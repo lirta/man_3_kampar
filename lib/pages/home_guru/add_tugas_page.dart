@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:progress_dialog/progress_dialog.dart';
 
 class AddTugasPage extends StatefulWidget {
   const AddTugasPage({Key key}) : super(key: key);
@@ -27,6 +28,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
   File filetugas;
   String nameFile;
   // FilePicker pikerFile = new FilePicker;
+  ProgressDialog pr;
   Future plhFile() async {
     var pickFile = await FilePicker.platform.pickFiles();
     final file = pickFile.files.first;
@@ -54,8 +56,24 @@ class _AddTugasPageState extends State<AddTugasPage> {
     final _id_kls = args['id_kelas'];
     final _id_mapel = args['id_mpl'];
     final _mapel = args['mapel'];
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
 
     handleAdd() async {
+      pr.show();
       print(dropdownValue);
       print(dateinput.text);
       if (!(filetugas != null &&
@@ -82,12 +100,14 @@ class _AddTugasPageState extends State<AddTugasPage> {
         print(response.request);
         if (response.statusCode == 200) {
           print("berhasil");
+          pr.hide();
           Navigator.pushNamed(context, '/tugas', arguments: {
             'id_kelas': _id_kls,
             'id_mapel': _id_mapel,
             'mapel': _mapel
           });
         } else {
+          pr.hide();
           Flushbar(
             duration: Duration(seconds: 4),
             flushbarPosition: FlushbarPosition.TOP,

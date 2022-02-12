@@ -6,9 +6,13 @@ import 'package:apps/model/siswa/siswa_model.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
 import 'package:apps/service/server.dart';
+import 'package:dio/dio.dart';
+import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,6 +42,8 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
     });
   }
 
+// String url = jawabanUrl + _file;
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     AuthSiswaProvider authSiswaProvider =
@@ -49,16 +55,69 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
     final _file = args['file'];
     final _limit = args['tgl_kumpel'];
     final _id_soal = args['id_soal'];
+    String url = soalUrl + _file;
     SiswaJawabanProvider siswaJawabanProvider =
         Provider.of<SiswaJawabanProvider>(context);
     SiswaJawabanModel jawaban_siswa = siswaJawabanProvider.jawaban_siswa;
+
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
+    handleAdd() async {
+      pr.show();
+      if (!(filetugas != null)) {
+        Flushbar(
+          duration: Duration(seconds: 4),
+          flushbarPosition: FlushbarPosition.TOP,
+          backgroundColor: Color(0xffff5c83),
+          message: 'Pilih file',
+        ).show(context);
+      } else {
+        var nis = siswa.nis;
+        var url = '$baseUrl' + 'soal/$_id_soal/jawaban/$nis';
+        print(url);
+        var uri = Uri.parse(url);
+        var request = new http.MultipartRequest("POST", uri);
+        var multipartFile =
+            await http.MultipartFile.fromPath('file_tugas', filetugas.path);
+        request.files.add(multipartFile);
+        var response = await request.send();
+        print(response.request);
+        if (response.statusCode == 200) {
+          print("berhasil");
+          pr.hide();
+          Navigator.of(context).pop();
+        } else {
+          pr.hide();
+          Flushbar(
+            duration: Duration(seconds: 4),
+            flushbarPosition: FlushbarPosition.TOP,
+            backgroundColor: Color(0xffff5c83),
+            message: 'Gagal Upload tugas, Silahkan cobalagi nantik',
+          ).show(context);
+        }
+      }
+    }
+
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Detail Tugas'),
+        title: Text('Detail'),
       );
     }
 
@@ -72,7 +131,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         child: Row(
           children: [
             Text(
-              "Detail Tugas /",
+              "Detail /",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -110,7 +169,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Detail Tugas",
+              "Detail",
               style: primaryTextStyle.copyWith(fontWeight: semiBold),
             ),
             Divider(
@@ -121,7 +180,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
               height: 5,
             ),
             Text(
-              'Jenis Tugas',
+              'Jenis',
               style: primaryTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
@@ -157,18 +216,63 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
               height: 5,
             ),
             Text(
-              'File Tugas',
+              'File',
               style: primaryTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
             SizedBox(
               height: 5,
             ),
-            Text(
-              _file,
-              style: subtitleTextStyle.copyWith(
-                fontSize: 12,
-                // fontWeight: medium
+            GestureDetector(
+              onTap: () async {
+                pr.show();
+                Map<Permission, PermissionStatus> statuses = await [
+                  Permission.storage,
+                  //add more permission to request here.
+                ].request();
+                if (statuses[Permission.storage].isGranted) {
+                  var dir = await DownloadsPathProvider.downloadsDirectory;
+                  if (dir != null) {
+                    String savename = _file;
+                    String savePath = dir.path + "/$savename";
+                    print(savePath);
+                    //output:  /storage/emulated/0/Download/banner.png
+
+                    try {
+                      await Dio().download(url, savePath,
+                          onReceiveProgress: (received, total) {
+                        if (total != -1) {
+                          print((received / total * 100).toStringAsFixed(0) +
+                              "%");
+                          //you can build progressbar feature too
+                        }
+                      });
+                      print("File is saved to download folder.");
+                      pr.hide();
+                      print('berhasil');
+                    } on DioError catch (e) {
+                      pr.hide();
+                      print(e.message);
+                    }
+                  }
+                } else {
+                  pr.hide();
+                  print("No permission to read and write.");
+                }
+                // var url = '$baseUrl' + 'jawaban/$id/download';
+                // var response = await http.put(Uri.parse(url));
+                // if (response.statusCode == 200) {
+                //   print('berhasil');
+                // } else {
+                //   print("gagal");
+                // }
+              },
+              child: Text(
+                _file,
+                style: subtitleTextStyle.copyWith(
+                  fontSize: 12,
+                  // fontWeight: medium
+                ),
               ),
             ),
           ],
@@ -241,37 +345,91 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
       );
     }
 
-    handleAdd() async {
-      if (!(filetugas != null)) {
-        Flushbar(
-          duration: Duration(seconds: 4),
-          flushbarPosition: FlushbarPosition.TOP,
-          backgroundColor: Color(0xffff5c83),
-          message: 'Pilih file',
-        ).show(context);
-      } else {
-        var nis = siswa.nis;
-        var url = '$baseUrl' + '/soal/$_id_soal/jawaban/$nis';
-        print(url);
-        var uri = Uri.parse(url);
-        var request = new http.MultipartRequest("POST", uri);
-        var multipartFile =
-            await http.MultipartFile.fromPath('file_soal', filetugas.path);
-        request.files.add(multipartFile);
-        var response = await request.send();
-        print(response.request);
-        if (response.statusCode == 200) {
-          print("berhasil");
-          Navigator.of(context).pop();
-        } else {
-          Flushbar(
-            duration: Duration(seconds: 4),
-            flushbarPosition: FlushbarPosition.TOP,
-            backgroundColor: Color(0xffff5c83),
-            message: 'Gagal Upload tugas, Silahkan cobalagi nantik',
-          ).show(context);
-        }
-      }
+    Widget upJawaban() {
+      return Container(
+        margin: EdgeInsets.only(top: defaultMargin),
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: backgroundColor6,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Upload Jawaban",
+              style: blackTextStyle.copyWith(fontWeight: semiBold),
+            ),
+            Divider(
+              thickness: 1,
+              color: Color(0Xff2e3141),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              height: 100,
+              width: double.infinity,
+              // margin: EdgeInsets.only(top: 30),
+              child: GestureDetector(
+                onTap: () {
+                  plhFile();
+                },
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.fileImage,
+                          color: secondaryColor,
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text('Pilih file tugas',
+                            style: priceTextStyle.copyWith(
+                                fontSize: 18, fontWeight: semiBold)),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    nameFile == null
+                        ? Container()
+                        : Text(nameFile,
+                            style: priceTextStyle.copyWith(
+                                fontSize: 18, fontWeight: semiBold))
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 30),
+              child: TextButton(
+                onPressed: handleAdd,
+                style: TextButton.styleFrom(
+                  backgroundColor: birumudaColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  'upload Jawaban',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
     }
 
     Widget filejawaban() {
@@ -324,7 +482,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         actions: <Widget>[
           FlatButton(
             onPressed: () {
-              // addnilai();
+              handleAdd();
             },
             textColor: Theme.of(context).primaryColor,
             child: const Text('Submit'),
@@ -340,7 +498,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
       );
     }
 
-    Widget signUpButton() {
+    Widget upload() {
       return Container(
         height: 50,
         width: double.infinity,
@@ -410,7 +568,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
               children: [
                 detailTugasTitle(),
                 tugas(),
-                jawaban_siswa != null ? tugasJawaban() : signUpButton()
+                jawaban_siswa != null ? tugasJawaban() : upJawaban()
               ],
             ),
           ),

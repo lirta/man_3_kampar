@@ -2,8 +2,11 @@ import 'package:apps/model/siswa/siswa_model.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 import 'package:apps/service/server.dart';
+import 'package:apps/widget/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../theme.dart';
 
@@ -14,7 +17,27 @@ class HomeSiswaPage extends StatefulWidget {
   _HomeSiswaPageState createState() => _HomeSiswaPageState();
 }
 
+String akses;
+ProgressDialog pr;
+
 class _HomeSiswaPageState extends State<HomeSiswaPage> {
+  // void initState() {
+  //   cekUser();
+  // }
+
+  // cekUser() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   akses = prefs.getString("akses");
+  //   print(akses);
+  //   if (akses != "3") {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.remove("id");
+  //     prefs.setBool("is_login", false);
+  //     Navigator.pushNamedAndRemoveUntil(
+  //         context, '/splash-login', (route) => false);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     SiswaDaftarMapelProvider siswaDaftarMapelProvider =
@@ -22,6 +45,22 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
+
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -66,7 +105,7 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           right: defaultMargin,
         ),
         child: Text(
-          'Daftar Hari Mengajar',
+          'Daftar Pelajaran',
           style: subtitleTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semiBold,
@@ -81,10 +120,15 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
         child: Column(children: [
           GestureDetector(
             onTap: () async {
+              // SplashScreen();
+              // Navigator.pushNamed(context, 'sc');
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Senin", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -121,10 +165,13 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Selasa", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -161,10 +208,13 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Rabu", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -201,10 +251,13 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Kamis", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -241,10 +294,13 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Jumat", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
@@ -281,10 +337,13 @@ class _HomeSiswaPageState extends State<HomeSiswaPage> {
           ),
           GestureDetector(
             onTap: () async {
+              pr.show();
               if (await siswaDaftarMapelProvider.getjadwal(
                   hari: "Sabtu", id: siswa.id_kelas)) {
+                pr.hide();
                 Navigator.pushNamed(context, '/daftar-mapel-siswa');
               } else {
+                pr.hide();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: alertColor,
