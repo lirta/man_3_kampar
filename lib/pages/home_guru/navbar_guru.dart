@@ -86,15 +86,6 @@ class NavbarGuru extends StatelessWidget {
                 Navigator.pushNamed(context, '/daftar-mapel-soal');
               } else {
                 pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
               }
             },
           ),
@@ -102,15 +93,39 @@ class NavbarGuru extends StatelessWidget {
               leading: Icon(FontAwesomeIcons.bookmark),
               title: Text('Absensi'),
               onTap: () async {
-                pr.show();
-                // if (await siswaDaftarMapelProvider.jadwal(id: siswa.id_kelas)) {
-                //   pr.hide();
-                //   Navigator.pushNamed(context, '/daftar-mapel-absen-siswa');
-                // }
-              }),
+              pr.show();
+              if (await jadwalProvider.getmapel(id: guru.id)) {
+                pr.hide();
+                Navigator.pushNamed(context, '/daftar-mapel-absen');
+              } else {
+                pr.hide();
+              }
+            },),
           ListTile(
             leading: Icon(FontAwesomeIcons.bookOpen),
             title: Text('Nilai'),
+            onTap: () async {
+              pr.show();
+              if (await jadwalProvider.getmapel(id: guru.id)) {
+                pr.hide();
+                Navigator.pushNamed(context, '/daftar-mapel-nilai');
+              } else {
+                pr.hide();
+              }
+            }
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.calendarAlt),
+            title: Text('Kalender Akademis'),
+            onTap: () async {
+              // pr.show();
+              // if (await jadwalProvider.getmapel(id: guru.id)) {
+              //   pr.hide();
+              //   Navigator.pushNamed(context, '/daftar-mapel-nilai');
+              // } else {
+              //   pr.hide();
+              // }
+            }
           ),
           Divider(),
           // ListTile(

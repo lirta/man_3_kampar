@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
@@ -106,7 +107,14 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                   color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
               height: 100,
               child: Row(
                 children: [
@@ -122,7 +130,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Siswa ",
+                      "Daftar Absen",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -133,47 +141,54 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/tugas', arguments: {
-                'id_kelas': _id_kls,
-                'id_mapel': _id_mapel,
-                'mapel': _mapel
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 100,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.bookOpen,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Tugas",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 25,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, '/tugas', arguments: {
+          //       'id_kelas': _id_kls,
+          //       'id_mapel': _id_mapel,
+          //       'mapel': _mapel
+          //     });
+          //   },
+          //   child: Container(
+          //     margin: EdgeInsets.only(top: 20),
+          //     padding:
+          //         EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(12),
+          //          color: birutuaColor,
+          //             boxShadow: [
+          //               BoxShadow(
+          //                   offset: Offset(0, 17),
+          //                   blurRadius: 23,
+          //                   spreadRadius: -13,
+          //                   color: blackColor)
+          //             ]),
+          //     height: 100,
+          //     child: Row(
+          //       children: [
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         Icon(
+          //           FontAwesomeIcons.bookOpen,
+          //           size: 30,
+          //         ),
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         Expanded(
+          //           child: Text(
+          //             "Tugas",
+          //             style: blackTextStyle.copyWith(
+          //               fontSize: 25,
+          //               fontWeight: semiBold,
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           GestureDetector(
             onTap: () async {
               pr.show();
@@ -191,7 +206,14 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                   color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
               height: 100,
               child: Row(
                 children: [
@@ -207,7 +229,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Absensi",
+                      "Add Absensi",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -223,9 +245,10 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -234,7 +257,7 @@ class _DetailMapelPageState extends State<DetailMapelPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarDetailMapelTitle(), daftarDetailMapel()],
+              children: [ daftarDetailMapel()],
             ),
           ),
         ),

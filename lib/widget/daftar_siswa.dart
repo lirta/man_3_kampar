@@ -28,11 +28,16 @@ class DaftarSiswa extends StatelessWidget {
         margin: EdgeInsets.only(top: 20),
         padding: EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12), color: backgroundColor6),
+            borderRadius: BorderRadius.circular(12), color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
         child: Row(
-          children: [
-            Expanded(
-              child: ClipRRect(
+          children: [ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.network(
                     fotosiswaUrl + siswa.foto,
@@ -40,7 +45,7 @@ class DaftarSiswa extends StatelessWidget {
                     height: 50,
                     // fit: BoxFit.cover,
                   )),
-            ),
+            
             SizedBox(
               width: 10,
             ),

@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/absen_siswa_provider.dart';
 import 'package:apps/widget/kehadiran_siswa.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,13 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: secondaryColor,
+          boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ],
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -151,9 +159,10 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -162,7 +171,7 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [detailTugasTitle(), tugas(), detailTugas()],
+              children: [tugas(), detailTugas()],
             ),
           ),
         ),

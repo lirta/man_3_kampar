@@ -1,6 +1,8 @@
 import 'package:apps/model/siswa/siswa_model.dart';
 import 'package:apps/pages/home_siswa/navbar.dart';
+import 'package:apps/provider/kalender_provider.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/nilai_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 // import 'package:apps/service/server.dart';
 import 'package:apps/theme.dart';
@@ -20,6 +22,10 @@ class _IndexSiswaState extends State<IndexSiswa> {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
+    NilaiProvider nilaiProvider=
+        Provider.of<NilaiProvider>(context);
+    KalenderProvider kalenderProvider=
+        Provider.of<KalenderProvider>(context);
     SiswaDaftarMapelProvider siswaDaftarMapelProvider =
         Provider.of<SiswaDaftarMapelProvider>(context);
     AuthSiswaProvider authSiswaProvider =
@@ -194,7 +200,13 @@ class _IndexSiswaState extends State<IndexSiswa> {
                       color: blackColor)
                 ]),
             child: new InkWell(
-              onTap: () {},
+              onTap: () async {
+                pr.show();
+                if (await nilaiProvider.getnilaisiswa(id: siswa.id, id_ajaran: siswa.id_ajaran)) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-mapel-nilai-siswa');
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -235,7 +247,13 @@ class _IndexSiswaState extends State<IndexSiswa> {
                       color: blackColor)
                 ]),
             child: new InkWell(
-              onTap: () {},
+              onTap: () async {
+                pr.show();
+                if (await kalenderProvider.getkalender(id: siswa.id_ajaran)) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-mapel-kalender-siswa');
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -264,7 +282,7 @@ class _IndexSiswaState extends State<IndexSiswa> {
       appBar: AppBar(
         backgroundColor: biruColor,
         centerTitle: true,
-        title: Text("Dashboard Siswa"),
+        title: Text('Dashboard Siswa'),
       ),
       drawer: NavbarSiswa(),
       body: Container(

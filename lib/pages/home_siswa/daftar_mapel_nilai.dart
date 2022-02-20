@@ -1,41 +1,45 @@
-import 'package:apps/pages/home_guru/navbar_guru.dart';
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
-import 'package:apps/theme.dart';
-import 'package:apps/widget/daftar_siswa.dart';
+import 'package:apps/pages/home_siswa/navbar.dart';
+import 'package:apps/provider/siswa/nilai_provider.dart';
+import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
+import 'package:apps/widget/siswa_daftar_mapel_nilai.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DaftarSiswaPage extends StatelessWidget {
-  const DaftarSiswaPage({Key key}) : super(key: key);
+import '../../theme.dart';
+
+class DaftarMapelNilaiSisa extends StatefulWidget {
+  const DaftarMapelNilaiSisa({ Key key }) : super(key: key);
 
   @override
+  _DaftarMapelNilaiSisaState createState() => _DaftarMapelNilaiSisaState();
+}
+
+class _DaftarMapelNilaiSisaState extends State<DaftarMapelNilaiSisa> {
+  @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final _id_mapel = args['id_mapel'];
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+    NilaiProvider nilaiProvider =
+        Provider.of<NilaiProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Daftar Siswa'),
+        title: Text('Daftar Nilai Keseluruhan'),
       );
     }
 
-    Widget daftarSiswaTitle() {
+    Widget daftarMapelTitle() {
       return Container(
         margin: EdgeInsets.only(
-          top: 10,
+          top: defaultMargin,
           left: defaultMargin,
           right: defaultMargin,
         ),
         child: Row(
           children: [
             Text(
-              "Daftar Siswa /",
+              "Daftar Mapel/",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -46,7 +50,7 @@ class DaftarSiswaPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',
@@ -61,28 +65,17 @@ class DaftarSiswaPage extends StatelessWidget {
       );
     }
 
-    Widget daftarSiswa() {
+    Widget daftarMapel() {
       return Container(
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: daftarSiswaPerkelasProvider.siswa == null
-            ? Text("Tidak ada siswa")
+        child: nilaiProvider.nilai == null
+            ? Text("tidak ada jadwal")
             : Column(
-                children: daftarSiswaPerkelasProvider.siswa
-                    .map((siswa) => DaftarSiswa(siswa, _id_mapel))
+                children: nilaiProvider.nilai
+                    .map((nilai) => SiswaDaftarMapelNilai(nilai))
                     .toList(),
-                //  [
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                // ]
               ),
       );
     }
@@ -91,7 +84,7 @@ class DaftarSiswaPage extends StatelessWidget {
       backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
-      drawer: NavbarGuru(),
+      drawer: NavbarSiswa(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -100,7 +93,7 @@ class DaftarSiswaPage extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [ daftarSiswa()],
+              children: [daftarMapel()],
             ),
           ),
         ),

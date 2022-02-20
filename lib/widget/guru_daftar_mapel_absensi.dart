@@ -1,28 +1,26 @@
-import 'package:apps/model/siswa/siswa_daftar_mapel_model.dart';
-import 'package:apps/model/siswa/siswa_model.dart';
-import 'package:apps/provider/siswa/auth_siswa_provider.dart';
-import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
-import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
+import 'package:apps/model/guru/guru_model.dart';
+import 'package:apps/model/guru/jadwal_model.dart';
+import 'package:apps/provider/guru/auth_guru_provider.dart';
+import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
+import 'package:apps/provider/guru/jadwal_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
-class SiswaDaftarMapelSoal extends StatelessWidget {
-  // const SiswaDaftarMapel({Key key}) : super(key: key);
-  SiswaDaftarMapelSoal(this.mapel);
-  SiswaDaftarMapelModel mapel;
+class GuruDaftarMapelAbsensi extends StatelessWidget {
+  // const GuruDaftarMapelAbsensi({ Key key }) : super(key: key);
+  GuruDaftarMapelAbsensi(this.jadwal);
+  JadwalModel jadwal;
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
-    AuthSiswaProvider authSiswaProvider =
-        Provider.of<AuthSiswaProvider>(context);
-    SiswaModel siswa = authSiswaProvider.siswa;
-    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
-        Provider.of<DaftarAbsenSiswaProvider>(context);
-    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
-        Provider.of<DaftarTugasSiswaProvider>(context);
+    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
+    GuruModel guru = authGuruProvider.guru;
+    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
+        Provider.of<DaftarSiswaPerkelasProvider>(context);
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -39,17 +37,19 @@ class SiswaDaftarMapelSoal extends StatelessWidget {
           color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
     );
     return GestureDetector(
-      onTap: () async {
-        pr.show();
-        if (await daftarTugasSiswaProvider.getdaftartugas(
-            id_kelas: mapel.id_kls, id_mapel: mapel.id_mapel)) {
-          pr.hide();
-          Navigator.pushNamed(context, '/daftar-tugas-siswa', arguments: {
-            'nama': siswa.nama,
-            'nis': siswa.nis,
-            'mapel': mapel.mapel
-          });
-        }
+      // onTap: () {
+      //   Navigator.pushNamed(context, '/tugas', arguments: {
+      //     'id_kelas': jadwal.id_kls,
+      //     'id_mapel': jadwal.id_mapel,
+      //     'mapel': jadwal.mapel
+      //   });
+      // },
+      onTap: () {
+        Navigator.pushNamed(context, '/detail-mapel', arguments: {
+          'id_kelas': jadwal.id_kls,
+          'id_mapel': jadwal.id_mapel,
+          'mapel': jadwal.mapel
+        });
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -70,19 +70,19 @@ class SiswaDaftarMapelSoal extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   mapel.nama_kelas,
-                  //   // 'lirta',
-                  //   style: blackTextStyle.copyWith(
-                  //     fontSize: 20,
-                  //     fontWeight: semiBold,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
                   Text(
-                    mapel.mapel,
+                    jadwal.nama_kelas,
+                    // 'lirta',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 20,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    jadwal.mapel,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,

@@ -1,41 +1,63 @@
+import 'package:apps/model/guru/guru_model.dart';
 import 'package:apps/pages/home_guru/navbar_guru.dart';
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
+import 'package:apps/provider/guru/auth_guru_provider.dart';
+import 'package:apps/provider/guru/jadwal_provider.dart';
 import 'package:apps/theme.dart';
-import 'package:apps/widget/daftar_siswa.dart';
+import 'package:apps/widget/guru_daftar_mapel_absensi.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-class DaftarSiswaPage extends StatelessWidget {
-  const DaftarSiswaPage({Key key}) : super(key: key);
+class DaftarMapelAbsenGuru extends StatefulWidget {
+  const DaftarMapelAbsenGuru({ Key key }) : super(key: key);
 
   @override
+  _DaftarMapelAbsenGuruState createState() => _DaftarMapelAbsenGuruState();
+}
+
+class _DaftarMapelAbsenGuruState extends State<DaftarMapelAbsenGuru> {
+  ProgressDialog pr;
+  @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final _id_mapel = args['id_mapel'];
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
+    GuruModel guru = authGuruProvider.guru;
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Daftar Siswa'),
+        title: Text('Pilih Matapelajaran'),
       );
     }
 
-    Widget daftarSiswaTitle() {
+    Widget daftarMapelTitle() {
       return Container(
         margin: EdgeInsets.only(
-          top: 10,
+          top: defaultMargin,
           left: defaultMargin,
           right: defaultMargin,
         ),
         child: Row(
           children: [
             Text(
-              "Daftar Siswa /",
+              "Daftar Mapel/",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -46,7 +68,7 @@ class DaftarSiswaPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/home');
+                Navigator.pushNamed(context, '/home-siswa');
               },
               child: Text(
                 'Home',
@@ -61,28 +83,17 @@ class DaftarSiswaPage extends StatelessWidget {
       );
     }
 
-    Widget daftarSiswa() {
+    Widget daftarMapel() {
       return Container(
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: daftarSiswaPerkelasProvider.siswa == null
-            ? Text("Tidak ada siswa")
+        child: jadwalProvider.jadwal == null
+            ? Text("tidak ada jadwal")
             : Column(
-                children: daftarSiswaPerkelasProvider.siswa
-                    .map((siswa) => DaftarSiswa(siswa, _id_mapel))
+                children: jadwalProvider.jadwal
+                    .map((jadwal) => GuruDaftarMapelAbsensi(jadwal))
                     .toList(),
-                //  [
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                //   DaftarSiswa(),
-                // ]
               ),
       );
     }
@@ -100,7 +111,7 @@ class DaftarSiswaPage extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [ daftarSiswa()],
+              children: [daftarMapel()],
             ),
           ),
         ),

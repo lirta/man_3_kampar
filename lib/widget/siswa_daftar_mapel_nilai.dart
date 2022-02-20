@@ -1,28 +1,23 @@
+import 'package:apps/model/siswa/nilai_siswa_model.dart';
 import 'package:apps/model/siswa/siswa_daftar_mapel_model.dart';
 import 'package:apps/model/siswa/siswa_model.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
-import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
-import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
+import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-import '../theme.dart';
+class SiswaDaftarMapelNilai extends StatelessWidget {
+  // const SiswaDaftarMapelNilai({ Key key }) : super(key: key);
 
-class SiswaDaftarMapelSoal extends StatelessWidget {
-  // const SiswaDaftarMapel({Key key}) : super(key: key);
-  SiswaDaftarMapelSoal(this.mapel);
-  SiswaDaftarMapelModel mapel;
+  SiswaDaftarMapelNilai(this.nilai);
+  NilaiSiswaModel nilai;
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
-    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
-        Provider.of<DaftarAbsenSiswaProvider>(context);
-    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
-        Provider.of<DaftarTugasSiswaProvider>(context);
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -40,16 +35,16 @@ class SiswaDaftarMapelSoal extends StatelessWidget {
     );
     return GestureDetector(
       onTap: () async {
-        pr.show();
-        if (await daftarTugasSiswaProvider.getdaftartugas(
-            id_kelas: mapel.id_kls, id_mapel: mapel.id_mapel)) {
-          pr.hide();
-          Navigator.pushNamed(context, '/daftar-tugas-siswa', arguments: {
-            'nama': siswa.nama,
-            'nis': siswa.nis,
-            'mapel': mapel.mapel
-          });
-        }
+        // pr.show();
+        // if (await daftarTugasSiswaProvider.getdaftartugas(
+        //     id_kelas: mapel.id_kls, id_mapel: mapel.id_mapel)) {
+        //   pr.hide();
+        //   Navigator.pushNamed(context, '/daftar-tugas-siswa', arguments: {
+        //     'nama': siswa.nama,
+        //     'nis': siswa.nis,
+        //     'mapel': mapel.mapel
+        //   });
+        // }
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -70,19 +65,19 @@ class SiswaDaftarMapelSoal extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Text(
-                  //   mapel.nama_kelas,
-                  //   // 'lirta',
-                  //   style: blackTextStyle.copyWith(
-                  //     fontSize: 20,
-                  //     fontWeight: semiBold,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
                   Text(
-                    mapel.mapel,
+                    nilai.mapel,
+                    // 'lirta',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 20,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    nilai.nilai,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,

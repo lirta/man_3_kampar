@@ -1,5 +1,7 @@
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/kalender_provider.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/nilai_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 import 'package:apps/service/server.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,10 @@ class NavbarSiswa extends StatelessWidget {
   Widget build(BuildContext context) {
     SiswaDaftarMapelProvider siswaDaftarMapelProvider =
         Provider.of<SiswaDaftarMapelProvider>(context);
+    KalenderProvider kalenderProvider=
+        Provider.of<KalenderProvider>(context);
+    NilaiProvider nilaiProvider=
+        Provider.of<NilaiProvider>(context);
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
@@ -60,6 +66,11 @@ class NavbarSiswa extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(FontAwesomeIcons.calendar),
+            title: Text('Tahun Ajaran'),
+            subtitle: Text(siswa.ajaran),
+          ),
+          ListTile(
             leading: Icon(FontAwesomeIcons.chartArea),
             title: Text('Dashboard'),
             onTap: () {
@@ -97,6 +108,24 @@ class NavbarSiswa extends StatelessWidget {
           ListTile(
             leading: Icon(FontAwesomeIcons.bookOpen),
             title: Text('Nilai'),
+            onTap: () async {
+                pr.show();
+                if (await nilaiProvider.getnilaisiswa(id: siswa.id, id_ajaran: siswa.id_ajaran)) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-mapel-nilai-siswa');
+                }
+              }
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.calendarAlt),
+            title: Text('Kalender Akademis'),
+            onTap: () async {
+                pr.show();
+                if (await kalenderProvider.getkalender(id: siswa.id_ajaran)) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-mapel-kalender-siswa');
+                }
+              }
           ),
           Divider(),
           // ListTile(

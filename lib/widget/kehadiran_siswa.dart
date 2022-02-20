@@ -25,7 +25,14 @@ class KehadiranSiswa extends StatelessWidget {
                     ? izin
                     : absen.absen == "Sakit"
                         ? sakit
-                        : alpa),
+                        : alpa,
+                        boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
