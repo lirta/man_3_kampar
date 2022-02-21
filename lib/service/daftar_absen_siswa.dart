@@ -16,7 +16,7 @@ class DaftarSiswaAbsen extends StatelessWidget {
         // Navigator.pushNamed(context, '/detail-tugas');
       },
       child: Container(
-        margin: EdgeInsets.only(top: 20),
+        margin: EdgeInsets.only(top: 10, bottom: 10),
         padding: EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -26,7 +26,14 @@ class DaftarSiswaAbsen extends StatelessWidget {
                     ? izin
                     : absen_siswa.absen == "Sakit"
                         ? sakit
-                        : alpa),
+                        : alpa,
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 17),
+                  blurRadius: 23,
+                  spreadRadius: -13,
+                  color: blackColor)
+            ]),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

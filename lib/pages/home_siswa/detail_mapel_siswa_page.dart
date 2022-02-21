@@ -1,4 +1,5 @@
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/pages/home_siswa/navbar.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
 import 'package:apps/provider/siswa/daftar_nilai_provider.dart';
@@ -102,56 +103,70 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
           top: 14,
         ),
         child: Column(children: [
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await daftarAbsenSiswaProvider.getabsen(
-                  id_siswa: siswa.nis, id_matapelajaran: _id_mapel)) {
-                pr.hide();
-                Navigator.pushNamed(context, "/detail-absen-siswa",
-                    arguments: {'nama': siswa.nama, 'nis': siswa.nis});
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 100,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.users,
-                    size: 30,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Absensi ",
-                      style: blackTextStyle.copyWith(
-                        fontSize: 25,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () async {
+          //     pr.show();
+          //     if (await daftarAbsenSiswaProvider.getabsen(
+          //         id_siswa: siswa.nis, id_matapelajaran: _id_mapel)) {
+          //       pr.hide();
+          //       Navigator.pushNamed(context, "/detail-absen-siswa", arguments: {
+          //         'nama': siswa.nama,
+          //         'nis': siswa.nis,
+          //         'mapel': _mapel
+          //       });
+          //     }
+          //   },
+          //   child: Container(
+          //     margin: EdgeInsets.only(top: 20),
+          //     padding:
+          //         EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(12),
+          //         color: birutuaColor,
+          //         boxShadow: [
+          //           BoxShadow(
+          //               offset: Offset(0, 17),
+          //               blurRadius: 23,
+          //               spreadRadius: -13,
+          //               color: blackColor)
+          //         ]),
+          //     height: 100,
+          //     child: Row(
+          //       children: [
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         Icon(
+          //           FontAwesomeIcons.users,
+          //           size: 30,
+          //         ),
+          //         SizedBox(
+          //           width: 20,
+          //         ),
+          //         Expanded(
+          //           child: Text(
+          //             "Absensi ",
+          //             style: blackTextStyle.copyWith(
+          //               fontSize: 25,
+          //               fontWeight: semiBold,
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           GestureDetector(
             onTap: () async {
               pr.show();
               if (await daftarTugasSiswaProvider.getdaftartugas(
                   id_kelas: _id_kls, id_mapel: _id_mapel)) {
                 pr.hide();
-                Navigator.pushNamed(context, '/daftar-tugas-siswa');
+                Navigator.pushNamed(context, '/daftar-tugas-siswa', arguments: {
+                  'nama': siswa.nama,
+                  'nis': siswa.nis,
+                  'mapel': _mapel
+                });
               }
             },
             child: Container(
@@ -160,7 +175,14 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                  color: birutuaColor,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 17),
+                        blurRadius: 23,
+                        spreadRadius: -13,
+                        color: blackColor)
+                  ]),
               height: 100,
               child: Row(
                 children: [
@@ -176,7 +198,7 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Daftar Tugas",
+                      "Daftar Soal",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -193,7 +215,11 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
               if (await daftarNilaiProvider.getnilai(
                   id_kelas: _id_kls, id_mapel: _id_mapel, id_siswa: siswa.id)) {
                 pr.hide();
-                Navigator.pushNamed(context, '/nilai-siswa');
+                Navigator.pushNamed(context, '/nilai-siswa', arguments: {
+                  'nama': siswa.nama,
+                  'nis': siswa.nis,
+                  'mapel': _mapel
+                });
                 print("berhasil");
               }
               // Navigator.pushNamed(context, '/nilai-siswa');
@@ -204,7 +230,14 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                  color: birutuaColor,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 17),
+                        blurRadius: 23,
+                        spreadRadius: -13,
+                        color: blackColor)
+                  ]),
               height: 100,
               child: Row(
                 children: [
@@ -239,6 +272,7 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarSiswa(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -247,7 +281,7 @@ class _DetailMapelSiswaPageState extends State<DetailMapelSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarDetailMapelTitle(), daftarDetailMapel()],
+              children: [daftarDetailMapel()],
             ),
           ),
         ),

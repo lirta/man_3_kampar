@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_siswa/navbar.dart';
 import 'package:apps/provider/siswa/daftar_nilai_provider.dart';
 import 'package:apps/widget/nilai_siswa.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +18,18 @@ class _DaftarNilaiSiswaPageState extends State<DaftarNilaiSiswaPage> {
   Widget build(BuildContext context) {
     DaftarNilaiProvider daftarNilaiProvider =
         Provider.of<DaftarNilaiProvider>(context);
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    final _id_kls = args['id_kelas'];
+    final _id_mapel = args['id_mapel'];
+    final _mapel = args['mapel'];
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Daftar Nilai Siswa'),
+        title: Text('Daftar Nilai ' + _mapel),
       );
     }
 
@@ -90,9 +96,10 @@ class _DaftarNilaiSiswaPageState extends State<DaftarNilaiSiswaPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarSiswa(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -101,7 +108,7 @@ class _DaftarNilaiSiswaPageState extends State<DaftarNilaiSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [detailNilaiTitle(), nilai()],
+              children: [nilai()],
             ),
           ),
         ),

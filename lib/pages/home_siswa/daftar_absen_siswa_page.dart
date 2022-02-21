@@ -1,4 +1,5 @@
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/pages/home_siswa/navbar.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
 import 'package:apps/service/daftar_absen_siswa.dart';
@@ -21,13 +22,18 @@ class _DaftarAbsenSiswaPageState extends State<DaftarAbsenSiswaPage> {
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+    final nama = args['nama'];
+    final nis = args['nis'];
+    final _mapel = args['mapel'];
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Detail Absensi Siswa'),
+        title: Text('Absensi ' + _mapel),
       );
     }
 
@@ -152,9 +158,10 @@ class _DaftarAbsenSiswaPageState extends State<DaftarAbsenSiswaPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarSiswa(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -163,7 +170,7 @@ class _DaftarAbsenSiswaPageState extends State<DaftarAbsenSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [detailTugasTitle(), tugas(), detailTugas()],
+              children: [detailTugas()],
             ),
           ),
         ),

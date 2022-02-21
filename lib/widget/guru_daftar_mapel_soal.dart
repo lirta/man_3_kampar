@@ -1,25 +1,23 @@
-import 'package:apps/model/siswa/daftar_tugas_siswa_model.dart';
-import 'package:apps/model/siswa/siswa_model.dart';
-import 'package:apps/provider/siswa/auth_siswa_provider.dart';
-import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
+import 'package:apps/model/guru/guru_model.dart';
+import 'package:apps/model/guru/jadwal_model.dart';
+import 'package:apps/provider/guru/auth_guru_provider.dart';
+import 'package:apps/provider/guru/jadwal_provider.dart';
+import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-import '../theme.dart';
-
-class DaftarTugasSiswa extends StatelessWidget {
-  // const DaftarTugasSiswa({ Key key }) : super(key: key);
-  DaftarTugasSiswaModel tugas_siswa;
-  DaftarTugasSiswa(this.tugas_siswa);
+class GuruDaftarMapelSoal extends StatelessWidget {
+  // const GuruDaftarMapelSoal({ Key key }) : super(key: key);
+  GuruDaftarMapelSoal(this.jadwal);
+  JadwalModel jadwal;
   ProgressDialog pr;
+
   @override
   Widget build(BuildContext context) {
-    SiswaJawabanProvider siswaJawabanProvider =
-        Provider.of<SiswaJawabanProvider>(context);
-    AuthSiswaProvider authSiswaProvider =
-        Provider.of<AuthSiswaProvider>(context);
-    SiswaModel siswa = authSiswaProvider.siswa;
+    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
+    GuruModel guru = authGuruProvider.guru;
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -36,26 +34,12 @@ class DaftarTugasSiswa extends StatelessWidget {
           color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
     );
     return GestureDetector(
-      onTap: () async {
-        pr.show();
-        if (await siswaJawabanProvider.getjawaban(
-            id: tugas_siswa.id_soal, id_siswa: siswa.id)) {
-          pr.hide();
-          Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
-            'jenis': tugas_siswa.jenis,
-            'file': tugas_siswa.file,
-            'tgl_kumpel': tugas_siswa.limit,
-            'id_soal': tugas_siswa.id_soal,
-          });
-        } else {
-          print("gagal");
-          // Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
-          //   'jenis': tugas_siswa.jenis,
-          //   'file': tugas_siswa.file,
-          //   'tgl_kumpel': tugas_siswa.limit,
-          //   'id_soal': tugas_siswa.id_soal,
-          // });
-        }
+      onTap: () {
+        Navigator.pushNamed(context, '/tugas', arguments: {
+          'id_kelas': jadwal.id_kls,
+          'id_mapel': jadwal.id_mapel,
+          'mapel': jadwal.mapel
+        });
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -77,7 +61,7 @@ class DaftarTugasSiswa extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tugas_siswa.jenis,
+                    jadwal.nama_kelas,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -88,21 +72,10 @@ class DaftarTugasSiswa extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    tugas_siswa.limit,
+                    jadwal.mapel,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
-                      fontSize: 18,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    tugas_siswa.file,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: semiBold,
                     ),
                   ),

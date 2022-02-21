@@ -1,52 +1,44 @@
 import 'package:apps/pages/home_siswa/navbar.dart';
-import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
-import 'package:apps/widget/daftar_tugas_siswa.dart';
+import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
+import 'package:apps/widget/siswa_daftar_mapel_soal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
-class DaftarTugasSiswaPage extends StatefulWidget {
-  const DaftarTugasSiswaPage({Key key}) : super(key: key);
+class DaftarMapelSoal extends StatefulWidget {
+  const DaftarMapelSoal({Key key}) : super(key: key);
 
   @override
-  _DaftarTugasSiswaPageState createState() => _DaftarTugasSiswaPageState();
+  _DaftarMapelSoalState createState() => _DaftarMapelSoalState();
 }
 
-class _DaftarTugasSiswaPageState extends State<DaftarTugasSiswaPage> {
+class _DaftarMapelSoalState extends State<DaftarMapelSoal> {
   @override
   Widget build(BuildContext context) {
-    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
-        Provider.of<DaftarTugasSiswaProvider>(context);
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final _id_kls = args['id_kelas'];
-    final _id_mapel = args['id_mapel'];
-    final _mapel = args['mapel'];
+    SiswaDaftarMapelProvider siswaDaftarMapelProvider =
+        Provider.of<SiswaDaftarMapelProvider>(context);
     Widget header() {
       return AppBar(
         backgroundColor: birumudaColor,
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text(
-          'Daftar Soal ' + _mapel,
-          maxLines: 2,
-        ),
+        title: Text('Pilih Matapelajaran'),
       );
     }
 
-    Widget daftarSiswaTitle() {
+    Widget daftarMapelTitle() {
       return Container(
         margin: EdgeInsets.only(
-          top: 10,
+          top: defaultMargin,
           left: defaultMargin,
           right: defaultMargin,
         ),
         child: Row(
           children: [
             Text(
-              "Daftar Tugas /",
+              "Daftar Mapel/",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -72,17 +64,18 @@ class _DaftarTugasSiswaPageState extends State<DaftarTugasSiswaPage> {
       );
     }
 
-    Widget daftarSiswa() {
+    Widget daftarMapel() {
       return Container(
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: daftarTugasSiswaProvider.tugas_siswa == null
-            ? Text("Tidak ada tugas")
+        child: siswaDaftarMapelProvider.mapel == null
+            ? Text("tidak ada jadwal")
             : Column(
-                children: daftarTugasSiswaProvider.tugas_siswa
-                    .map((tugas_siswa) => DaftarTugasSiswa(tugas_siswa))
-                    .toList()),
+                children: siswaDaftarMapelProvider.mapel
+                    .map((mapel) => SiswaDaftarMapelSoal(mapel))
+                    .toList(),
+              ),
       );
     }
 
@@ -99,7 +92,7 @@ class _DaftarTugasSiswaPageState extends State<DaftarTugasSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarSiswa()],
+              children: [daftarMapel()],
             ),
           ),
         ),

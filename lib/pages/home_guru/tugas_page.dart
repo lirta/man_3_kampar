@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -106,7 +107,14 @@ class _TugasPageState extends State<TugasPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                  color: birutuaColor,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 17),
+                        blurRadius: 23,
+                        spreadRadius: -13,
+                        color: blackColor)
+                  ]),
               height: 100,
               child: Row(
                 children: [
@@ -122,7 +130,7 @@ class _TugasPageState extends State<TugasPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Daftar Tugas",
+                      "Daftar Soal",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -147,7 +155,14 @@ class _TugasPageState extends State<TugasPage> {
                   EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
+                  color: birutuaColor,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(0, 17),
+                        blurRadius: 23,
+                        spreadRadius: -13,
+                        color: blackColor)
+                  ]),
               height: 100,
               child: Row(
                 children: [
@@ -163,7 +178,7 @@ class _TugasPageState extends State<TugasPage> {
                   ),
                   Expanded(
                     child: Text(
-                      "Add Tugas",
+                      "Add Soal",
                       style: blackTextStyle.copyWith(
                         fontSize: 25,
                         fontWeight: semiBold,
@@ -179,9 +194,10 @@ class _TugasPageState extends State<TugasPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -190,7 +206,7 @@ class _TugasPageState extends State<TugasPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarDetailMapelTitle(), daftarDetailMapel()],
+              children: [daftarDetailMapel()],
             ),
           ),
         ),

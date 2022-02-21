@@ -1,25 +1,28 @@
-import 'package:apps/model/siswa/daftar_tugas_siswa_model.dart';
+import 'package:apps/model/siswa/siswa_daftar_mapel_model.dart';
 import 'package:apps/model/siswa/siswa_model.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
-import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
+import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
-class DaftarTugasSiswa extends StatelessWidget {
-  // const DaftarTugasSiswa({ Key key }) : super(key: key);
-  DaftarTugasSiswaModel tugas_siswa;
-  DaftarTugasSiswa(this.tugas_siswa);
+class SiswaDaftarMapelSoal extends StatelessWidget {
+  // const SiswaDaftarMapel({Key key}) : super(key: key);
+  SiswaDaftarMapelModel mapel;
+  SiswaDaftarMapelSoal(this.mapel);
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
-    SiswaJawabanProvider siswaJawabanProvider =
-        Provider.of<SiswaJawabanProvider>(context);
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
+    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
+        Provider.of<DaftarAbsenSiswaProvider>(context);
+    DaftarTugasSiswaProvider daftarTugasSiswaProvider =
+        Provider.of<DaftarTugasSiswaProvider>(context);
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -38,23 +41,14 @@ class DaftarTugasSiswa extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         pr.show();
-        if (await siswaJawabanProvider.getjawaban(
-            id: tugas_siswa.id_soal, id_siswa: siswa.id)) {
+        if (await daftarTugasSiswaProvider.getdaftartugas(
+            id_kelas: mapel.id_kls, id_mapel: mapel.id_mapel)) {
           pr.hide();
-          Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
-            'jenis': tugas_siswa.jenis,
-            'file': tugas_siswa.file,
-            'tgl_kumpel': tugas_siswa.limit,
-            'id_soal': tugas_siswa.id_soal,
+          Navigator.pushNamed(context, '/daftar-tugas-siswa', arguments: {
+            'nama': siswa.nama,
+            'nis': siswa.nis,
+            'mapel': mapel.mapel
           });
-        } else {
-          print("gagal");
-          // Navigator.pushNamed(context, '/detail-tugas-siswa', arguments: {
-          //   'jenis': tugas_siswa.jenis,
-          //   'file': tugas_siswa.file,
-          //   'tgl_kumpel': tugas_siswa.limit,
-          //   'id_soal': tugas_siswa.id_soal,
-          // });
         }
       },
       child: Container(
@@ -76,33 +70,22 @@ class DaftarTugasSiswa extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Text(
+                  //   mapel.nama_kelas,
+                  //   // 'lirta',
+                  //   style: blackTextStyle.copyWith(
+                  //     fontSize: 20,
+                  //     fontWeight: semiBold,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
                   Text(
-                    tugas_siswa.jenis,
+                    mapel.mapel,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    tugas_siswa.limit,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 18,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    tugas_siswa.file,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 18,
                       fontWeight: semiBold,
                     ),
                   ),

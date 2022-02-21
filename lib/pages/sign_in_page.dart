@@ -32,7 +32,8 @@ class _SignInPageState extends State<SignInPage> {
         username: usernameController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/home');
+        // Navigator.pushNamed(context, '/home');
+        Navigator.pushNamed(context, '/index-guru');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

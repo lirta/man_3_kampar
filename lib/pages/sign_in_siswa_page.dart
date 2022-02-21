@@ -33,7 +33,7 @@ class _SignInSiswaPageState extends State<SignInSiswaPage> {
         username: usernameController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/home-siswa');
+        Navigator.pushNamed(context, '/index');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

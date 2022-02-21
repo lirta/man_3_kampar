@@ -1,22 +1,52 @@
 import 'package:apps/model/siswa/siswa_daftar_mapel_model.dart';
+import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/siswa/auth_siswa_provider.dart';
+import 'package:apps/provider/siswa/daftar_absen_siswa_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:provider/provider.dart';
 
 import '../theme.dart';
 
-class SiswaDaftarMapel extends StatelessWidget {
+class SiswaDaftarMapelAbsen extends StatelessWidget {
   // const SiswaDaftarMapel({Key key}) : super(key: key);
   SiswaDaftarMapelModel mapel;
-  SiswaDaftarMapel(this.mapel);
-
+  SiswaDaftarMapelAbsen(this.mapel);
+  ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
+    AuthSiswaProvider authSiswaProvider =
+        Provider.of<AuthSiswaProvider>(context);
+    SiswaModel siswa = authSiswaProvider.siswa;
+    DaftarAbsenSiswaProvider daftarAbsenSiswaProvider =
+        Provider.of<DaftarAbsenSiswaProvider>(context);
+    pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    pr.style(
+      message: 'Menunggu...',
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      elevation: 10.0,
+      insetAnimCurve: Curves.easeInOut,
+      progress: 0.0,
+      maxProgress: 100.0,
+      progressTextStyle: TextStyle(
+          color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    );
     return GestureDetector(
-      onTap: () {
-        // Navigator.pushNamed(context, '/detail-mapel-siswa', arguments: {
-        //   'id_kelas': mapel.id_kls,
-        //   'id_mapel': mapel.id_mapel,
-        //   'mapel': mapel.mapel
-        // });
+      onTap: () async {
+        pr.show();
+        if (await daftarAbsenSiswaProvider.getabsen(
+            id_siswa: siswa.nis, id_matapelajaran: mapel.id_mapel)) {
+          pr.hide();
+          Navigator.pushNamed(context, "/detail-absen-siswa", arguments: {
+            'nama': siswa.nama,
+            'nis': siswa.nis,
+            'mapel': mapel.mapel
+          });
+        }
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -50,17 +80,6 @@ class SiswaDaftarMapel extends StatelessWidget {
                   // ),
                   Text(
                     mapel.mapel,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    mapel.jam_mulai + " - " + mapel.jam_selesai,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,

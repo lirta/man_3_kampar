@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
 import 'package:apps/theme.dart';
 import 'package:apps/widget/daftar_mapel.dart';
@@ -78,9 +79,10 @@ class _DaftarMapelPageState extends State<DaftarMapelPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -89,7 +91,7 @@ class _DaftarMapelPageState extends State<DaftarMapelPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarMapelTitle(), daftarMapel()],
+              children: [daftarMapel()],
             ),
           ),
         ),

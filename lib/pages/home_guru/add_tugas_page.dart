@@ -126,7 +126,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Add Tugas',
+              'Add Soal',
               style: blackTextStyle.copyWith(
                 fontSize: 30,
                 fontWeight: semiBold,
@@ -136,7 +136,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
               height: 2,
             ),
             Text(
-              'Form untuk upload tugas ' + _mapel,
+              'Form untuk upload soal ' + _mapel,
               style: subtitleTextStyle.copyWith(fontSize: 15),
             ),
           ],
@@ -217,7 +217,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
         margin: EdgeInsets.only(top: 70),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
-            'Jenis Tugas',
+            'Jenis Soal',
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,
@@ -354,7 +354,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
                   SizedBox(
                     width: 15,
                   ),
-                  Text('Pilih file tugas',
+                  Text('Pilih file soal',
                       style: priceTextStyle.copyWith(
                           fontSize: 18, fontWeight: semiBold)),
                 ],
@@ -388,7 +388,7 @@ class _AddTugasPageState extends State<AddTugasPage> {
           ),
           child: isLoading == false
               ? Text(
-                  'Add Tugas',
+                  'Add Soal',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: medium,

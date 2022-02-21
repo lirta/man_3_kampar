@@ -1,4 +1,5 @@
 import 'package:apps/model/guru/guru_model.dart';
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
 import 'package:apps/service/server.dart';
@@ -58,91 +59,55 @@ class _HomePageState extends State<HomePage> {
           color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
     );
     Widget header() {
-      return Container(
-        margin: EdgeInsets.only(
-            top: defaultMargin, left: defaultMargin, right: defaultMargin),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Hallo, ' + guru.nama,
-                    style: primaryTextStyle.copyWith(
-                        fontSize: 24, fontWeight: semiBold),
-                  ),
-                  Text(
-                    guru.nip,
-                    style: subtitleTextStyle.copyWith(fontSize: 16),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                      image: NetworkImage(fotoUrl + guru.foto))),
-            )
-          ],
-        ),
-      );
-    }
-
-    Widget daftarHariTitle() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 14,
-          left: defaultMargin,
-          right: defaultMargin,
-        ),
-        child: Text(
-          'Daftar Mengajar',
-          style: subtitleTextStyle.copyWith(
-            fontSize: 22,
-            fontWeight: semiBold,
-          ),
-        ),
+      return AppBar(
+        backgroundColor: biruColor,
+        centerTitle: true,
+        title: Text('Pilih Hari'),
       );
     }
 
     Widget daftarHari() {
       return Container(
-        margin: EdgeInsets.only(left: 10, right: 10),
-        child: Column(children: [
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Senin", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+        margin: EdgeInsets.only(left: 40),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Senin", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Senin",
                       style: blackTextStyle.copyWith(
@@ -151,40 +116,48 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Selasa", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+              SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Selasa", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding:
+                      EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Selasa",
                       style: blackTextStyle.copyWith(
@@ -193,40 +166,48 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Rabu", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Rabu", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Rabu",
                       style: blackTextStyle.copyWith(
@@ -235,40 +216,47 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Kamis", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+              SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Kamis", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Kamis",
                       style: blackTextStyle.copyWith(
@@ -277,40 +265,48 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Jumat", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Jumat", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Jumat",
                       style: blackTextStyle.copyWith(
@@ -319,40 +315,47 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getjadwal(hari: "Sabtu", id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel');
-              } else {
-                pr.hide();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: alertColor,
-                    content: Text(
-                      'Hari Ini Tidak Ada Jadwal Mengajar',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                );
-              }
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding:
-                  EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: backgroundColor6),
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
+              SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  pr.show();
+                  if (await jadwalProvider.getjadwal(
+                      hari: "Sabtu", id: guru.id)) {
+                    pr.hide();
+                    Navigator.pushNamed(context, '/daftar-mapel');
+                  } else {
+                    pr.hide();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: alertColor,
+                        content: Text(
+                          'Hari Ini Tidak Ada Jadwal Mengajar',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: birutuaColor,
+                      boxShadow: [
+                        BoxShadow(
+                            offset: Offset(0, 17),
+                            blurRadius: 23,
+                            spreadRadius: -13,
+                            color: blackColor)
+                      ]),
+                  height: 70,
+                  width: 150,
+                  child: Center(
                     child: Text(
                       "Sabtu",
                       style: blackTextStyle.copyWith(
@@ -361,16 +364,23 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ]),
       );
     }
 
-    return ListView(
-      children: [header(), daftarHariTitle(), daftarHari()],
+    return Scaffold(
+      appBar: header(),
+      drawer: NavbarGuru(),
+      body: ListView(
+        children: [daftarHari()],
+      ),
     );
+    // return ListView(
+    //   children: [header(), daftarHariTitle(), daftarHari()],
+    // );
   }
 }

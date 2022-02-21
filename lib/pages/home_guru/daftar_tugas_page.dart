@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/daftar_tugas_provider.dart';
 import 'package:apps/widget/daftar_siswa.dart';
 import 'package:apps/widget/daftar_tugas.dart';
@@ -19,7 +20,7 @@ class DaftarTugasPage extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Daftar Tugas'),
+        title: Text('Daftar Soal'),
       );
     }
 
@@ -74,9 +75,10 @@ class DaftarTugasPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -85,7 +87,7 @@ class DaftarTugasPage extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [daftarSiswaTitle(), daftarSiswa()],
+              children: [daftarSiswa()],
             ),
           ),
         ),

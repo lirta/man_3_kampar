@@ -19,4 +19,12 @@ class JadwalProvider with ChangeNotifier {
       return true;
     } catch (e) {}
   }
+
+  Future<bool> getmapel({String id}) async {
+    try {
+      List<JadwalModel> jadwal = await JadwalService().getmapel(id: id);
+      _jadwal = jadwal;
+      return true;
+    } catch (e) {}
+  }
 }

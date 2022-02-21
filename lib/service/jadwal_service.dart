@@ -19,4 +19,19 @@ class JadwalService {
       return jadwal;
     }
   }
+
+  Future<List<JadwalModel>> getmapel({String id}) async {
+    var url = '$baseUrl' + 'get_jadwal_guru/$id';
+    var response = await http.get(Uri.parse(url));
+    print(response.body);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body)['jadwal'];
+      List<JadwalModel> jadwal = [];
+      for (var item in data) {
+        jadwal.add(JadwalModel.fromJson(item));
+      }
+
+      return jadwal;
+    }
+  }
 }

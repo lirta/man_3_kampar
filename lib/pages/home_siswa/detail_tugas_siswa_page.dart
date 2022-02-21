@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:apps/model/siswa/siswa_jawaban_model.dart';
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/pages/home_siswa/navbar.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
 import 'package:apps/service/server.dart';
@@ -117,7 +118,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Detail'),
+        title: Text('Detail Soal'),
       );
     }
 
@@ -162,9 +163,15 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         margin: EdgeInsets.only(top: defaultMargin),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: secondaryColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
+            color: secondaryColor,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 17),
+                  blurRadius: 23,
+                  spreadRadius: -13,
+                  color: blackColor)
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -285,9 +292,15 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         margin: EdgeInsets.only(top: defaultMargin),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: birutuaColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
+            color: birutuaColor,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 17),
+                  blurRadius: 23,
+                  spreadRadius: -13,
+                  color: blackColor)
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -350,9 +363,15 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
         margin: EdgeInsets.only(top: defaultMargin),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: backgroundColor6,
-          borderRadius: BorderRadius.circular(12),
-        ),
+            color: backgroundColor6,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 17),
+                  blurRadius: 23,
+                  spreadRadius: -13,
+                  color: blackColor)
+            ]),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -554,9 +573,10 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
     // }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarSiswa(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -566,7 +586,7 @@ class _DetailTugasSiswaPageState extends State<DetailTugasSiswaPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                detailTugasTitle(),
+                // detailTugasTitle(),
                 tugas(),
                 jawaban_siswa != null ? tugasJawaban() : upJawaban()
               ],

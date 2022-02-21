@@ -1,17 +1,24 @@
 import 'package:apps/pages/home_guru/add_tugas_page.dart';
 import 'package:apps/pages/home_guru/daftar_absensi_page.dart';
 import 'package:apps/pages/home_guru/daftar_mapel_page.dart';
+import 'package:apps/pages/home_guru/daftar_mapel_soal_guru.dart';
 import 'package:apps/pages/home_guru/daftar_siswa_page.dart';
 import 'package:apps/pages/home_guru/daftar_tugas_page.dart';
 import 'package:apps/pages/home_guru/datail_absen_siswa.dart';
 import 'package:apps/pages/home_guru/detail_absen_siswa_page.dart';
 import 'package:apps/pages/home_guru/detail_mapel_page.dart';
+import 'package:apps/pages/home_guru/home_page.dart';
+import 'package:apps/pages/home_guru/index_guru.dart';
 import 'package:apps/pages/home_guru/main_page.dart';
 import 'package:apps/pages/home_guru/tugas_page.dart';
 import 'package:apps/pages/home_siswa/daftar_absen_siswa_page.dart';
+import 'package:apps/pages/home_siswa/daftar_mapel_absen.dart';
+import 'package:apps/pages/home_siswa/daftar_mapel_soal.dart';
 import 'package:apps/pages/home_siswa/daftar_nilai_siswa_page.dart';
 import 'package:apps/pages/home_siswa/daftar_tugas_siswa_page.dart';
 import 'package:apps/pages/home_siswa/detail_tugas_siswa_page.dart';
+import 'package:apps/pages/home_siswa/home_siswa_page.dart';
+import 'package:apps/pages/home_siswa/index_siswa.dart';
 import 'package:apps/pages/home_siswa/main_page_siswa.dart';
 import 'package:apps/pages/home_siswa/siswa_daftar_mapel_page.dart';
 import 'package:apps/pages/sign_in_page.dart';
@@ -32,6 +39,7 @@ import 'package:apps/provider/siswa/daftar_nilai_provider.dart';
 import 'package:apps/provider/siswa/daftar_tugas_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 import 'package:apps/provider/siswa/siswa_jawaban_provider.dart';
+import 'package:apps/widget/siswa_daftar_mapel_soal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -77,14 +85,19 @@ class MyApp extends StatelessWidget {
           '/sign-in': (context) => const SignInPage(),
           '/sign-in-siswa': (context) => const SignInSiswaPage(),
           '/nilai-siswa': (context) => const DaftarNilaiSiswaPage(),
-          '/home-siswa': (context) => const MainPageSiswa(),
+          '/index': (context) => const IndexSiswa(),
+          '/home-siswa': (context) => const HomeSiswaPage(),
           '/daftar-mapel-siswa': (context) => const SiswaDaftarMapelPage(),
+          '/daftar-mapel-absen-siswa': (context) => const DaftarMapelAbsen(),
+          '/daftar-mapel-soal-siswa': (context) => const DaftarMapelSoal(),
           '/detail-mapel-siswa': (context) => const DetailMapelSiswaPage(),
           '/daftar-tugas-siswa': (context) => const DaftarTugasSiswaPage(),
           '/detail-absen-siswa': (context) => const DaftarAbsenSiswaPage(),
           '/detail-tugas-siswa': (context) => const DetailTugasSiswaPage(),
           //root tugas guru
-          '/home': (context) => const MainPage(),
+          '/index-guru': (context) => const IndexGuru(),
+          '/home': (context) => const HomePage(),
+          '/daftar-mapel-soal': (context) => const DaftarMapelSoalGuru(),
           '/daftar-mapel': (context) => const DaftarMapelPage(),
           '/detail-mapel': (context) => const DetailMapelPage(),
           '/daftar-siswa': (context) => const DaftarSiswaPage(),

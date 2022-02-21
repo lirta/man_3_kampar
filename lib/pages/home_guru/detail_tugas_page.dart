@@ -1,3 +1,4 @@
+import 'package:apps/pages/home_guru/navbar_guru.dart';
 import 'package:apps/provider/guru/jawaban_provider.dart';
 import 'package:apps/widget/daftar_tugas.dart';
 import 'package:apps/widget/tugas_siswa.dart';
@@ -46,7 +47,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Detail Tugas'),
+        title: Text('Detail Soal'),
       );
     }
 
@@ -60,7 +61,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         child: Row(
           children: [
             Text(
-              "Detail Tugas /",
+              "Detail Soal /",
               style: subtitleTextStyle.copyWith(
                 fontSize: 18,
                 fontWeight: semiBold,
@@ -91,14 +92,21 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
         margin: EdgeInsets.only(top: defaultMargin),
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: secondaryColor,
+          color: birutuaColor,
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 17),
+                blurRadius: 23,
+                spreadRadius: -13,
+                color: blackColor)
+          ],
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Detail Tugas",
+              "Detail Soal",
               style: primaryTextStyle.copyWith(fontWeight: semiBold),
             ),
             Divider(
@@ -109,7 +117,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              'Jenis Tugas',
+              'Jenis Soal',
               style: primaryTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
@@ -145,7 +153,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
               height: 5,
             ),
             Text(
-              'File Tugas',
+              'File Soal',
               style: primaryTextStyle.copyWith(fontWeight: medium),
               maxLines: 3,
             ),
@@ -170,7 +178,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
           top: 14,
         ),
         child: daftarJawabanProvider.jawaban == null
-            ? Text("Tidah ada data Jawaban")
+            ? Text("Tidah ada data Soal")
             : Column(
                 children: daftarJawabanProvider.jawaban
                     .map((jawaban) => TugasSiswa(jawaban))
@@ -191,9 +199,10 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
     }
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
+      drawer: NavbarGuru(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -202,7 +211,7 @@ class _DetailTugasPageState extends State<DetailTugasPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [detailTugasTitle(), tugas(), detailTugas()],
+              children: [tugas(), detailTugas()],
             ),
           ),
         ),

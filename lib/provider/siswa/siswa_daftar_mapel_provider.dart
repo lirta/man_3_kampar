@@ -19,4 +19,13 @@ class SiswaDaftarMapelProvider with ChangeNotifier {
       return true;
     } catch (e) {}
   }
+
+  Future<bool> jadwal({String id}) async {
+    try {
+      List<SiswaDaftarMapelModel> mapel =
+          await SiswaDaftarMapelService().jadwal(id: id);
+      _mapel = mapel;
+      return true;
+    } catch (e) {}
+  }
 }
