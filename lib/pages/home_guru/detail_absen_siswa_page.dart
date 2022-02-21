@@ -171,7 +171,7 @@ class _DetailAbsenSiswaPageState extends State<DetailAbsenSiswaPage> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [tugas(), detailTugas()],
+              children: [tugas(), ],
             ),
           ),
         ),

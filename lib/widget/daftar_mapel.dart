@@ -36,13 +36,25 @@ class DaftarMapel extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    jadwal.nama_kelas,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: semiBold,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        jadwal.hari ,
+                        // 'lirta',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                      SizedBox(width: 5,),
+                      Text(jadwal.nama_kelas,
+                        // 'lirta',
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 5,

@@ -1,28 +1,25 @@
+import 'package:apps/model/guru/ajaran_model.dart';
 import 'package:apps/model/guru/guru_model.dart';
-import 'package:apps/model/guru/jadwal_model.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
-import 'package:apps/provider/guru/daftar_nilai_guru_provider.dart';
-import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
-import 'package:apps/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-class GuruDaftarMapalNilai extends StatelessWidget {
-  // const GuruDaftarMapalNilai({ Key key }) : super(key: key);
-  GuruDaftarMapalNilai(this.jadwal);
-  JadwalModel jadwal;
+import '../theme.dart';
+
+class AjaranSoal extends StatelessWidget {
+  // const AjaranSoal({ Key key }) : super(key: key);
+  AjaranSoal(this.ajaran);
+  AjaranModel ajaran;
+
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
-    DaftarNilaiGuruProvider daftarNilaiGuruProvider =
-        Provider.of<DaftarNilaiGuruProvider>(context);
     JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
-    DaftarSiswaPerkelasProvider daftarSiswaPerkelasProvider =
-        Provider.of<DaftarSiswaPerkelasProvider>(context);
+
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -48,22 +45,12 @@ class GuruDaftarMapalNilai extends StatelessWidget {
       // },
       onTap: () async {
         pr.show();
-        if (await daftarNilaiGuruProvider.getnilaiguru(
-            id_kelas: jadwal.id_kls, id_mapel: jadwal.id_mapel)) {
+        if (await jadwalProvider.getmapel(id: guru.id , id_thn: ajaran.id_ajaran)) {
           pr.hide();
-          Navigator.pushNamed(context, '/daftar-nilai_keseluruhan-guru', arguments: {
-          'id_kelas': jadwal.id_kls,
-          'id_mapel': jadwal.id_mapel,
-          'mapel': jadwal.mapel
+          Navigator.pushNamed(context, '/daftar-mapel-soal');
+        } else {
+          pr.hide();
         }
-        );
-        }
-        // Navigator.pushNamed(context, '/detail-mapel', arguments: {
-        //   'id_kelas': jadwal.id_kls,
-        //   'id_mapel': jadwal.id_mapel,
-        //   'mapel': jadwal.mapel
-        // }
-        // );
       },
       child: Container(
         margin: EdgeInsets.only(top: 20),
@@ -85,7 +72,7 @@ class GuruDaftarMapalNilai extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    jadwal.nama_kelas,
+                    "Tahun Ajaran",
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,
@@ -96,7 +83,7 @@ class GuruDaftarMapalNilai extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    jadwal.mapel,
+                    ajaran.ajaran,
                     // 'lirta',
                     style: blackTextStyle.copyWith(
                       fontSize: 20,

@@ -1,32 +1,30 @@
-import 'package:apps/model/guru/guru_model.dart';
-import 'package:apps/pages/home_guru/navbar_guru.dart';
+import 'package:apps/model/admin/admin_model.dart';
+import 'package:apps/pages/home_admin/navbar_admin.dart';
+import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
-import 'package:apps/provider/guru/jadwal_provider.dart';
-import 'package:apps/widget/guru_daftar_mapel_nilai.dart';
+import 'package:apps/widget/ajaran_kalender.dart';
+import 'package:apps/widget/daftar_ajaran_admin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
-class DaftarMapelNilaiGuru extends StatefulWidget {
-  const DaftarMapelNilaiGuru({ Key key }) : super(key: key);
+class DaftarAjaranAdminPage extends StatefulWidget {
+  const DaftarAjaranAdminPage({ Key key }) : super(key: key);
 
   @override
-  _DaftarMapelNilaiGuruState createState() => _DaftarMapelNilaiGuruState();
+  _DaftarAjaranAdminPageState createState() => _DaftarAjaranAdminPageState();
 }
 
-class _DaftarMapelNilaiGuruState extends State<DaftarMapelNilaiGuru> {
+class _DaftarAjaranAdminPageState extends State<DaftarAjaranAdminPage> {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
-    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AjaranProvider ajaranProvider = Provider.of<AjaranProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
-    GuruModel guru = authGuruProvider.guru;
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
-    final id_ajaran = args['id_ajaran'];
-    final ajaran = args['ajaran'];
+    AdminModel admin = authGuruProvider.admin;
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -48,7 +46,7 @@ class _DaftarMapelNilaiGuruState extends State<DaftarMapelNilaiGuru> {
         elevation: 0,
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text('Pilih Matapelajaran'),
+        title: Text('Pilih Tahun Ajaran'),
       );
     }
 
@@ -93,11 +91,11 @@ class _DaftarMapelNilaiGuruState extends State<DaftarMapelNilaiGuru> {
         margin: EdgeInsets.only(
           top: 14,
         ),
-        child: jadwalProvider.jadwal == null
-            ? Text("tidak ada jadwal")
+        child: ajaranProvider.ajaran == null
+            ? Text("tidak ada data")
             : Column(
-                children: jadwalProvider.jadwal
-                    .map((jadwal) => GuruDaftarMapalNilai(jadwal))
+                children: ajaranProvider.ajaran
+                    .map((ajaran) => DaftarAjaranAdmin(ajaran))
                     .toList(),
               ),
       );
@@ -107,7 +105,7 @@ class _DaftarMapelNilaiGuruState extends State<DaftarMapelNilaiGuru> {
       backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
-      drawer: NavbarGuru(),
+      drawer: NavbarAdmin(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

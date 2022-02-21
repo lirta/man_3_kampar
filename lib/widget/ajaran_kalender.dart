@@ -2,6 +2,7 @@ import 'package:apps/model/guru/ajaran_model.dart';
 import 'package:apps/model/guru/guru_model.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
+import 'package:apps/provider/kalender_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class AjaranKalender extends StatelessWidget {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
+    KalenderProvider kalenderProvider = Provider.of<KalenderProvider>(context);
     JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
@@ -43,13 +45,13 @@ class AjaranKalender extends StatelessWidget {
       //     'mapel': jadwal.mapel
       //   });
       // },
-      onTap: () {
-        // Navigator.pushNamed(context, '/detail-mapel', arguments: {
-        //   'id_kelas': jadwal.id_kls,
-        //   'id_mapel': jadwal.id_mapel,
-        //   'mapel': jadwal.mapel
-        // });
-      },
+      onTap: () async {
+                pr.show();
+                if (await kalenderProvider.getkalender(id: ajaran.id_ajaran)) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-mapel-kalender-guru');
+                }
+              },
       child: Container(
         margin: EdgeInsets.only(top: 20),
         padding: EdgeInsets.only(top: 10, left: 12, bottom: 14, right: 20),

@@ -1,5 +1,7 @@
 import 'package:apps/model/guru/guru_model.dart';
+import 'package:apps/pages/home_admin/navbar_admin.dart';
 import 'package:apps/pages/home_guru/navbar_guru.dart';
+import 'package:apps/provider/admin_profider.dart';
 import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
@@ -9,18 +11,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
-class IndexGuru extends StatefulWidget {
-  const IndexGuru({Key key}) : super(key: key);
+class IndexAdmin extends StatefulWidget {
+  const IndexAdmin({Key key}) : super(key: key);
 
   @override
-  _IndexGuruState createState() => _IndexGuruState();
+  _IndexAdminState createState() => _IndexAdminState();
 }
 
-class _IndexGuruState extends State<IndexGuru> {
+class _IndexAdminState extends State<IndexAdmin> {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
-    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AdminProvider adminProvider = Provider.of<AdminProvider>(context);
     AjaranProvider ajaranProvider = Provider.of<AjaranProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
@@ -56,8 +58,14 @@ class _IndexGuruState extends State<IndexGuru> {
                       color: blackColor)
                 ]),
             child: new InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/home');
+              onTap: () async {
+                pr.show();
+                if (await adminProvider.get_siswa()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-siswa-admin');
+                } else {
+                  pr.hide();
+                }
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,7 +81,7 @@ class _IndexGuruState extends State<IndexGuru> {
                   )),
                   SizedBox(height: 20.0),
                   new Center(
-                    child: new Text('Jadwal',
+                    child: new Text('Change \nPasswoard \nSiswa',
                         style:
                             new TextStyle(fontSize: 18.0, color: Colors.black)),
                   )
@@ -101,9 +109,9 @@ class _IndexGuruState extends State<IndexGuru> {
             child: new InkWell(
               onTap: () async {
                 pr.show();
-                if (await ajaranProvider.getajaran()) {
+                if (await adminProvider.get_siswa()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-soal');
+                  Navigator.pushNamed(context, '/daftar-siswa-admin');
                 } else {
                   pr.hide();
                 }
@@ -116,13 +124,13 @@ class _IndexGuruState extends State<IndexGuru> {
                   SizedBox(height: 50.0),
                   Center(
                       child: Icon(
-                    FontAwesomeIcons.fileAlt,
+                    FontAwesomeIcons.laptopCode,
                     size: 40.0,
                     color: Colors.black,
                   )),
                   SizedBox(height: 20.0),
                   new Center(
-                    child: new Text('Soal',
+                    child: new Text('Change \nPasswoard \nGuru',
                         style:
                             new TextStyle(fontSize: 18.0, color: Colors.black)),
                   )
@@ -131,105 +139,6 @@ class _IndexGuruState extends State<IndexGuru> {
             ),
           ));
     }
-
-    Card makeDashboardAbsensi() {
-      return Card(
-          elevation: 1.0,
-          margin: new EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: birutuaColor,
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 17),
-                      blurRadius: 23,
-                      spreadRadius: -13,
-                      color: blackColor)
-                ]),
-            child: new InkWell(
-              onTap: () async {
-              pr.show();
-              if (await ajaranProvider.getajaran()) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-ajaran-daftar');
-              } else {
-                pr.hide();
-              }
-            },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                verticalDirection: VerticalDirection.down,
-                children: <Widget>[
-                  SizedBox(height: 50.0),
-                  Center(
-                      child: Icon(
-                    FontAwesomeIcons.bookmark,
-                    size: 40.0,
-                    color: Colors.black,
-                  )),
-                  SizedBox(height: 20.0),
-                  new Center(
-                    child: new Text('Absensi',
-                        style:
-                            new TextStyle(fontSize: 18.0, color: Colors.black)),
-                  )
-                ],
-              ),
-            ),
-          ));
-    }
-
-    Card makeDashboardNilai() {
-      return Card(
-          elevation: 1.0,
-          margin: new EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: birutuaColor,
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 17),
-                      blurRadius: 23,
-                      spreadRadius: -13,
-                      color: blackColor)
-                ]),
-            child: new InkWell(
-              onTap: () async {
-                pr.show();
-                if (await ajaranProvider.getajaran()) {
-                  pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-nilai');
-                } else {
-                  pr.hide();
-                }
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                verticalDirection: VerticalDirection.down,
-                children: <Widget>[
-                  SizedBox(height: 50.0),
-                  Center(
-                      child: Icon(
-                    FontAwesomeIcons.bookOpen,
-                    size: 40.0,
-                    color: Colors.black,
-                  )),
-                  SizedBox(height: 20.0),
-                  new Center(
-                    child: new Text('Nilai',
-                        style:
-                            new TextStyle(fontSize: 18.0, color: Colors.black)),
-                  )
-                ],
-              ),
-            ),
-          ));
-    }
-
     Card makeDashboardKalender() {
       return Card(
           elevation: 1.0,
@@ -250,7 +159,7 @@ class _IndexGuruState extends State<IndexGuru> {
                 pr.show();
                 if (await ajaranProvider.getajaran()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-kalender');
+                  Navigator.pushNamed(context, '/ajaran-kalender-admin');
                 } else {
                   pr.hide();
                 }
@@ -283,9 +192,9 @@ class _IndexGuruState extends State<IndexGuru> {
       appBar: AppBar(
         backgroundColor: biruColor,
         centerTitle: true,
-        title: Text("Dashboard Guru"),
+        title: Text("Dashboard Amin"),
       ),
-      drawer: NavbarGuru(),
+      drawer: NavbarAdmin(),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 2.0),
         child: GridView.count(
@@ -294,9 +203,7 @@ class _IndexGuruState extends State<IndexGuru> {
           children: <Widget>[
             makeDashboardJadwal(),
             makeDashboardSoal(),
-            makeDashboardAbsensi(),
-            makeDashboardNilai(),
-            makeDashboardKalender(),
+            makeDashboardKalender()
           ],
         ),
       ),

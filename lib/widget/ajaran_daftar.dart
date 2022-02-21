@@ -45,7 +45,7 @@ class AjaranDaftar extends StatelessWidget {
       // },
       onTap: () async {
         pr.show();
-        if (await jadwalProvider.getmapel(id: guru.id)) {
+        if (await jadwalProvider.getmapel(id: guru.id , id_thn: ajaran.id_ajaran)) {
           pr.hide();
           Navigator.pushNamed(context, '/daftar-mapel-absen');
         } else {

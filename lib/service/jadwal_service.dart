@@ -20,8 +20,8 @@ class JadwalService {
     }
   }
 
-  Future<List<JadwalModel>> getmapel({String id}) async {
-    var url = '$baseUrl' + 'get_jadwal_guru/$id';
+  Future<List<JadwalModel>> getmapel({String id, String id_thn}) async {
+    var url = '$baseUrl' + 'get_jadwal_guru/$id/$id_thn';
     var response = await http.get(Uri.parse(url));
     print(response.body);
     if (response.statusCode == 200) {

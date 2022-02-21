@@ -1,5 +1,7 @@
+import 'package:apps/model/admin/admin_model.dart';
 import 'package:apps/model/guru/guru_model.dart';
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/admin_profider.dart';
 import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
@@ -15,16 +17,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../theme.dart';
 
-class NavbarGuru extends StatelessWidget {
+class NavbarAdmin extends StatelessWidget {
   // const NavbarSiswa({Key key}) : super(key: key);
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
     KalenderProvider kalenderProvider = Provider.of<KalenderProvider>(context);
     AjaranProvider ajaranProvider = Provider.of<AjaranProvider>(context);
-    JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AdminProvider adminProvider = Provider.of<AdminProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
-    GuruModel guru = authGuruProvider.guru;
+    AdminModel guru = authGuruProvider.admin;
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
 
     pr.style(
@@ -51,7 +53,7 @@ class NavbarGuru extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  fotoUrl + guru.foto,
+                  adminUrl + guru.foto,
                   fit: BoxFit.cover,
                   width: 90,
                   height: 90,
@@ -68,79 +70,32 @@ class NavbarGuru extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(FontAwesomeIcons.chartArea),
-            title: Text('Dashboard'),
+            title: Text('Dashboard Admin'),
             onTap: () {
-              Navigator.pushNamed(context, '/index-guru');
+              Navigator.pushNamed(context, '/index-admin');
             },
           ),
           ListTile(
               leading: Icon(FontAwesomeIcons.laptopCode),
-              title: Text('Jadwal'),
-              onTap: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              // onTap: () async {
-              //   pr.show();
-              //   if (await ajaranProvider.getajaran()) {
-              //     pr.hide();
-              //     Navigator.pushNamed(context, '/daftar-ajaran-daftar');
-              //   } else {
-              //     pr.hide();
-              //   }
-              // }
-              ),
-          ListTile(
-              leading: Icon(FontAwesomeIcons.fileAlt),
-              title: Text('Soal'),
-              //   onTap: () async {
-              //     pr.show();
-              //     if (await jadwalProvider.getmapel(id: guru.id)) {
-              //       pr.hide();
-              //       Navigator.pushNamed(context, '/daftar-mapel-soal');
-              //     } else {
-              //       pr.hide();
-              //     }
-              //   },
-              // ),
+              title: Text('Change Passwoard Siswa'),
               onTap: () async {
                 pr.show();
-                if (await ajaranProvider.getajaran()) {
+                if (await adminProvider.get_siswa()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-soal');
+                  Navigator.pushNamed(context, '/daftar-siswa');
                 } else {
                   pr.hide();
                 }
-              }),
+              },
+              ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.bookmark),
-            title: Text('Absensi'),
-            // onTap: () async {
-            //   pr.show();
-            //   if (await jadwalProvider.getmapel(id: guru.id)) {
-            //     pr.hide();
-            //     Navigator.pushNamed(context, '/daftar-mapel-daftar');
-            //   } else {
-            //     pr.hide();
-            //   }
-            // },
-            onTap: () async {
-              pr.show();
-              if (await ajaranProvider.getajaran()) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-ajaran-daftar');
-              } else {
-                pr.hide();
-              }
-            }
-          ),
-          ListTile(
-              leading: Icon(FontAwesomeIcons.bookOpen),
-              title: Text('Nilai'),
+              leading: Icon(FontAwesomeIcons.laptopCode),
+              title: Text('Change Passwoard Guru'),
               onTap: () async {
                 pr.show();
-                if (await ajaranProvider.getajaran()) {
+                if (await adminProvider.get_guru()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-nilai');
+                  Navigator.pushNamed(context, '/daftar-guru');
                 } else {
                   pr.hide();
                 }
@@ -152,7 +107,7 @@ class NavbarGuru extends StatelessWidget {
                 pr.show();
                 if (await ajaranProvider.getajaran()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-ajaran-kalender');
+                  Navigator.pushNamed(context, '/ajaran-kalender-admin');
                 } else {
                   pr.hide();
                 }
