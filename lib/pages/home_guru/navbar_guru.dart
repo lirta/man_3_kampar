@@ -1,7 +1,9 @@
 import 'package:apps/model/guru/guru_model.dart';
 import 'package:apps/model/siswa/siswa_model.dart';
+import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
+import 'package:apps/provider/kalender_provider.dart';
 import 'package:apps/provider/siswa/auth_siswa_provider.dart';
 import 'package:apps/provider/siswa/siswa_daftar_mapel_provider.dart';
 import 'package:apps/service/server.dart';
@@ -18,6 +20,8 @@ class NavbarGuru extends StatelessWidget {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
+    KalenderProvider kalenderProvider = Provider.of<KalenderProvider>(context);
+    AjaranProvider ajaranProvider = Provider.of<AjaranProvider>(context);
     JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
@@ -70,29 +74,46 @@ class NavbarGuru extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.laptopCode),
-            title: Text('Jadwal'),
-            onTap: () {
-              Navigator.pushNamed(context, '/home');
-            },
-          ),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.fileAlt),
-            title: Text('Soal'),
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getmapel(id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel-soal');
-              } else {
-                pr.hide();
-              }
-            },
-          ),
-          ListTile(
-              leading: Icon(FontAwesomeIcons.bookmark),
-              title: Text('Absensi'),
+              leading: Icon(FontAwesomeIcons.laptopCode),
+              title: Text('Jadwal'),
+              // onTap: () {
+              //   Navigator.pushNamed(context, '/home');
+              // },
               onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-daftar');
+                } else {
+                  pr.hide();
+                }
+              }),
+          ListTile(
+              leading: Icon(FontAwesomeIcons.fileAlt),
+              title: Text('Soal'),
+              //   onTap: () async {
+              //     pr.show();
+              //     if (await jadwalProvider.getmapel(id: guru.id)) {
+              //       pr.hide();
+              //       Navigator.pushNamed(context, '/daftar-mapel-soal');
+              //     } else {
+              //       pr.hide();
+              //     }
+              //   },
+              // ),
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-daftar');
+                } else {
+                  pr.hide();
+                }
+              }),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.bookmark),
+            title: Text('Absensi'),
+            onTap: () async {
               pr.show();
               if (await jadwalProvider.getmapel(id: guru.id)) {
                 pr.hide();
@@ -100,33 +121,41 @@ class NavbarGuru extends StatelessWidget {
               } else {
                 pr.hide();
               }
-            },),
-          ListTile(
-            leading: Icon(FontAwesomeIcons.bookOpen),
-            title: Text('Nilai'),
-            onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getmapel(id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel-nilai');
-              } else {
-                pr.hide();
-              }
-            }
+            },
+            // onTap: () async {
+            //   pr.show();
+            //   if (await ajaranProvider.getajaran()) {
+            //     pr.hide();
+            //     Navigator.pushNamed(context, '/daftar-ajaran-daftar');
+            //   } else {
+            //     pr.hide();
+            //   }
+            // }
           ),
           ListTile(
-            leading: Icon(FontAwesomeIcons.calendarAlt),
-            title: Text('Kalender Akademis'),
-            onTap: () async {
-              // pr.show();
-              // if (await jadwalProvider.getmapel(id: guru.id)) {
-              //   pr.hide();
-              //   Navigator.pushNamed(context, '/daftar-mapel-nilai');
-              // } else {
-              //   pr.hide();
-              // }
-            }
-          ),
+              leading: Icon(FontAwesomeIcons.bookOpen),
+              title: Text('Nilai'),
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-daftar');
+                } else {
+                  pr.hide();
+                }
+              }),
+          ListTile(
+              leading: Icon(FontAwesomeIcons.calendarAlt),
+              title: Text('Kalender Akademis'),
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-kalender');
+                } else {
+                  pr.hide();
+                }
+              }),
           Divider(),
           // ListTile(
           //   leading: Icon(Icons.settings),

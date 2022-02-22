@@ -1,5 +1,6 @@
 import 'package:apps/model/guru/guru_model.dart';
 import 'package:apps/pages/home_guru/navbar_guru.dart';
+import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/jadwal_provider.dart';
 import 'package:apps/theme.dart';
@@ -20,6 +21,7 @@ class _IndexGuruState extends State<IndexGuru> {
   @override
   Widget build(BuildContext context) {
     JadwalProvider jadwalProvider = Provider.of<JadwalProvider>(context);
+    AjaranProvider ajaranProvider = Provider.of<AjaranProvider>(context);
     AuthGuruProvider authGuruProvider = Provider.of<AuthGuruProvider>(context);
     GuruModel guru = authGuruProvider.guru;
     pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
@@ -54,9 +56,15 @@ class _IndexGuruState extends State<IndexGuru> {
                       color: blackColor)
                 ]),
             child: new InkWell(
-              onTap: () {
-              Navigator.pushNamed(context, '/home');
-            },
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-daftar');
+                } else {
+                  pr.hide();
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -98,14 +106,14 @@ class _IndexGuruState extends State<IndexGuru> {
                 ]),
             child: new InkWell(
               onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getmapel(id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel-soal');
-              } else {
-                pr.hide();
-              }
-            },
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-soal');
+                } else {
+                  pr.hide();
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -147,14 +155,14 @@ class _IndexGuruState extends State<IndexGuru> {
                 ]),
             child: new InkWell(
               onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getmapel(id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel-absen');
-              } else {
-                pr.hide();
-              }
-            },
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-absen');
+                } else {
+                  pr.hide();
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -196,14 +204,14 @@ class _IndexGuruState extends State<IndexGuru> {
                 ]),
             child: new InkWell(
               onTap: () async {
-              pr.show();
-              if (await jadwalProvider.getmapel(id: guru.id)) {
-                pr.hide();
-                Navigator.pushNamed(context, '/daftar-mapel-nilai');
-              } else {
-                pr.hide();
-              }
-            },
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-nilai');
+                } else {
+                  pr.hide();
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,
@@ -244,7 +252,15 @@ class _IndexGuruState extends State<IndexGuru> {
                       color: blackColor)
                 ]),
             child: new InkWell(
-              onTap: () {},
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/daftar-ajaran-nilai');
+                } else {
+                  pr.hide();
+                }
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.min,

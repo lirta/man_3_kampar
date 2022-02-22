@@ -1,5 +1,8 @@
+import 'package:apps/model/guru/ajaran_model.dart';
 import 'package:apps/pages/home_guru/add_tugas_page.dart';
 import 'package:apps/pages/home_guru/daftar_absensi_page.dart';
+import 'package:apps/pages/home_guru/daftar_ajaran_daftar.dart';
+import 'package:apps/pages/home_guru/daftar_ajaran_kalender.dart';
 import 'package:apps/pages/home_guru/daftar_mapel_absen_guru.dart';
 import 'package:apps/pages/home_guru/daftar_mapel_nilai_guru.dart';
 import 'package:apps/pages/home_guru/daftar_mapel_page.dart';
@@ -31,6 +34,7 @@ import 'package:apps/pages/sign_up_page.dart';
 import 'package:apps/pages/splash_login.dart';
 import 'package:apps/pages/splash_page.dart';
 import 'package:apps/provider/guru/absen_siswa_provider.dart';
+import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
 import 'package:apps/provider/guru/daftar_siswa_perkelas_provider.dart';
 import 'package:apps/provider/guru/daftar_tugas_provider.dart';
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PageProvider()),
+        ChangeNotifierProvider(create: (context) => AjaranProvider()),
         ChangeNotifierProvider(create: (context) => NilaiProvider()),
         ChangeNotifierProvider(create: (context) => KalenderProvider()),
         ChangeNotifierProvider(create: (context) => DaftarNilaiProvider()),
@@ -98,8 +103,10 @@ class MyApp extends StatelessWidget {
           '/daftar-mapel-siswa': (context) => const SiswaDaftarMapelPage(),
           '/daftar-mapel-absen-siswa': (context) => const DaftarMapelAbsen(),
           '/daftar-mapel-soal-siswa': (context) => const DaftarMapelSoal(),
-          '/daftar-mapel-nilai-siswa': (context) => const DaftarMapelNilaiSisa(),
-          '/daftar-mapel-kalender-siswa': (context) => const DaftarMapelKalenderSiswa(),
+          '/daftar-mapel-nilai-siswa': (context) =>
+              const DaftarMapelNilaiSisa(),
+          '/daftar-mapel-kalender-siswa': (context) =>
+              const DaftarMapelKalenderSiswa(),
           '/detail-mapel-siswa': (context) => const DetailMapelSiswaPage(),
           '/daftar-tugas-siswa': (context) => const DaftarTugasSiswaPage(),
           '/detail-absen-siswa': (context) => const DaftarAbsenSiswaPage(),
@@ -119,6 +126,9 @@ class MyApp extends StatelessWidget {
           '/daftar-tugas': (context) => const DaftarTugasPage(),
           '/detail-tugas': (context) => const DetailTugasPage(),
           '/add-tugas': (context) => const AddTugasPage(),
+          '/daftar-ajaran-kalender': (context) =>
+              const DaftarAjaranKalenderPage(),
+          '/daftar-ajaran-daftar': (context) => const DaftarAjaranDaftarPage(),
         },
         // home: SplashPage(),
       ),

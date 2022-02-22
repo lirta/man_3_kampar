@@ -66,23 +66,70 @@ class SiswaDaftarMapelNilai extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
+                    "Nilai Keseluruhan",
+                    style: primaryTextStyle.copyWith(fontWeight: semiBold),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Color(0Xff2e3141),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Matapelajaran',
+                    style: subtitleTextStyle.copyWith(fontWeight: medium),
+                    maxLines: 3,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
                     nilai.mapel,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: semiBold,
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 12,
+                      // fontWeight: medium
                     ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   Text(
-                    nilai.nilai,
-                    // 'lirta',
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: semiBold,
+                    'Tahun Ajaran',
+                    style: subtitleTextStyle.copyWith(fontWeight: medium),
+                    maxLines: 3,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    nilai.ajaran,
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 12,
+                      // fontWeight: medium
                     ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Nilai',
+                    style: subtitleTextStyle.copyWith(fontWeight: medium),
+                    maxLines: 3,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    nilai.nilai,
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 12,
+                      // fontWeight: medium
+                    ),
+                    maxLines: 5,
+                  ),
+                  SizedBox(
+                    height: 5,
                   ),
                 ],
               ),
