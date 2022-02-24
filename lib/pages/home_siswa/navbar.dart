@@ -17,10 +17,8 @@ class NavbarSiswa extends StatelessWidget {
   Widget build(BuildContext context) {
     SiswaDaftarMapelProvider siswaDaftarMapelProvider =
         Provider.of<SiswaDaftarMapelProvider>(context);
-    KalenderProvider kalenderProvider=
-        Provider.of<KalenderProvider>(context);
-    NilaiProvider nilaiProvider=
-        Provider.of<NilaiProvider>(context);
+    KalenderProvider kalenderProvider = Provider.of<KalenderProvider>(context);
+    NilaiProvider nilaiProvider = Provider.of<NilaiProvider>(context);
     AuthSiswaProvider authSiswaProvider =
         Provider.of<AuthSiswaProvider>(context);
     SiswaModel siswa = authSiswaProvider.siswa;
@@ -106,27 +104,26 @@ class NavbarSiswa extends StatelessWidget {
                 }
               }),
           ListTile(
-            leading: Icon(FontAwesomeIcons.bookOpen),
-            title: Text('Nilai'),
-            onTap: () async {
+              leading: Icon(FontAwesomeIcons.bookOpen),
+              title: Text('Nilai'),
+              onTap: () async {
                 pr.show();
-                if (await nilaiProvider.getnilaisiswa(id: siswa.id, id_ajaran: siswa.id_ajaran)) {
+                if (await nilaiProvider.getnilaisiswa(
+                    id: siswa.id, id_ajaran: siswa.id_ajaran)) {
                   pr.hide();
                   Navigator.pushNamed(context, '/daftar-mapel-nilai-siswa');
                 }
-              }
-          ),
+              }),
           ListTile(
-            leading: Icon(FontAwesomeIcons.calendarAlt),
-            title: Text('Kalender Akademis'),
-            onTap: () async {
+              leading: Icon(FontAwesomeIcons.calendarAlt),
+              title: Text('Kalender Akademis'),
+              onTap: () async {
                 pr.show();
                 if (await kalenderProvider.getkalender(id: siswa.id_ajaran)) {
                   pr.hide();
                   Navigator.pushNamed(context, '/daftar-mapel-kalender-siswa');
                 }
-              }
-          ),
+              }),
           Divider(),
           // ListTile(
           //   leading: Icon(Icons.settings),
@@ -147,7 +144,7 @@ class NavbarSiswa extends StatelessWidget {
               prefs.remove("id");
               prefs.setBool("is_login", false);
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/splash-login', (route) => false);
+                  context, '/login', (route) => false);
             },
           ),
         ],

@@ -1,8 +1,12 @@
-
 import 'package:apps/pages/home_admin/daftar-ajaran-admin.dart';
 import 'package:apps/pages/home_admin/daftar_guru_admin_page.dart';
+import 'package:apps/pages/home_admin/daftar_mapel_admin.dart';
+import 'package:apps/pages/home_admin/daftar_nilai_admin_page.dart';
 import 'package:apps/pages/home_admin/daftar_siswa_admin_page.dart';
+import 'package:apps/pages/home_admin/data_guru_page.dart';
+import 'package:apps/pages/home_admin/data_siswa.page.dart';
 import 'package:apps/pages/home_admin/index_admin.dart';
+import 'package:apps/pages/home_admin/tahun_ajaran-admin.dart';
 // import 'package:apps/pages/home_admin/index_guru.dart';
 import 'package:apps/pages/home_guru/add_tugas_page.dart';
 import 'package:apps/pages/home_guru/daftar_absensi_page.dart';
@@ -35,6 +39,8 @@ import 'package:apps/pages/home_siswa/detail_tugas_siswa_page.dart';
 import 'package:apps/pages/home_siswa/home_siswa_page.dart';
 import 'package:apps/pages/home_siswa/index_siswa.dart';
 import 'package:apps/pages/home_siswa/siswa_daftar_mapel_page.dart';
+import 'package:apps/pages/login.dart';
+import 'package:apps/pages/login_sukses.dart';
 import 'package:apps/pages/sign_in_page.dart';
 import 'package:apps/pages/sign_in_page_admin.dart';
 import 'package:apps/pages/sign_in_siswa_page.dart';
@@ -103,6 +109,9 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashPage(),
           // '/sc': (context) => SplashScreen(),
+          '/login': (context) => const Login(),
+          '/sucses': (context) => const Sucsec(),
+
           '/splash-login': (context) => const SplashLoginPage(),
           '/sign-in': (context) => const SignInPage(),
           '/sign-in-siswa': (context) => const SignInSiswaPage(),
@@ -145,13 +154,19 @@ class MyApp extends StatelessWidget {
           '/daftar-ajaran-daftar': (context) => const DaftarAjaranDaftarPage(),
           '/daftar-ajaran-soal': (context) => const DaftarAjaranSoalPage(),
           '/daftar-ajaran-nilai': (context) => const DaftarAjaranNilaiPage(),
-          '/daftar-nilai_keseluruhan-guru': (context) => const DaftarNilaiKeseluruhanSiswaPage(),
-          '/tesabsen': (context) => const DetailAbsenSiswaPage (),
+          '/daftar-nilai_keseluruhan-guru': (context) =>
+              const DaftarNilaiKeseluruhanSiswaPage(),
+          '/tesabsen': (context) => const DetailAbsenSiswaPage(),
           //admin
           '/index-admin': (context) => const IndexAdmin(),
           '/daftar-guru': (context) => const DaftarGuruAdminPage(),
           '/daftar-siswa-admin': (context) => const DaftarSiswaAdminPage(),
           '/ajaran-kalender-admin': (context) => const DaftarAjaranAdminPage(),
+          '/data-guru': (context) => const DataGuruPage(),
+          '/data-siswa': (context) => const DataSiswaPage(),
+          '/tahun-ajaran-admin': (context) => const TahunAjaranAdmin(),
+          '/daftar-mapel-admin': (context) => const DaftarMapelNilaiAdminPage(),
+          '/daftar-nilai-admin': (context) => const DaftarNilaiAdminPage(),
         },
         // home: SplashPage(),
       ),

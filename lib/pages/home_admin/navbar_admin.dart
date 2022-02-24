@@ -76,18 +76,44 @@ class NavbarAdmin extends StatelessWidget {
             },
           ),
           ListTile(
-              leading: Icon(FontAwesomeIcons.laptopCode),
-              title: Text('Change Passwoard Siswa'),
-              onTap: () async {
-                pr.show();
-                if (await adminProvider.get_siswa()) {
-                  pr.hide();
-                  Navigator.pushNamed(context, '/daftar-siswa');
-                } else {
-                  pr.hide();
-                }
-              },
-              ),
+            leading: Icon(FontAwesomeIcons.laptopCode),
+            title: Text('Data Siswa'),
+            onTap: () async {
+              pr.show();
+              if (await adminProvider.get_siswa()) {
+                pr.hide();
+                Navigator.pushNamed(context, '/data-siswa');
+              } else {
+                pr.hide();
+              }
+            },
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.laptopCode),
+            title: Text('Data Guru'),
+            onTap: () async {
+              pr.show();
+              if (await adminProvider.get_guru()) {
+                pr.hide();
+                Navigator.pushNamed(context, '/data-guru');
+              } else {
+                pr.hide();
+              }
+            },
+          ),
+          ListTile(
+            leading: Icon(FontAwesomeIcons.laptopCode),
+            title: Text('Change Passwoard Siswa'),
+            onTap: () async {
+              pr.show();
+              if (await adminProvider.get_siswa()) {
+                pr.hide();
+                Navigator.pushNamed(context, '/daftar-siswa-admin');
+              } else {
+                pr.hide();
+              }
+            },
+          ),
           ListTile(
               leading: Icon(FontAwesomeIcons.laptopCode),
               title: Text('Change Passwoard Guru'),
@@ -96,6 +122,18 @@ class NavbarAdmin extends StatelessWidget {
                 if (await adminProvider.get_guru()) {
                   pr.hide();
                   Navigator.pushNamed(context, '/daftar-guru');
+                } else {
+                  pr.hide();
+                }
+              }),
+          ListTile(
+              leading: Icon(FontAwesomeIcons.laptopCode),
+              title: Text('Nilai Akhir Siswa'),
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/tahun-ajaran-admin');
                 } else {
                   pr.hide();
                 }
@@ -132,7 +170,7 @@ class NavbarAdmin extends StatelessWidget {
               prefs.remove("id");
               prefs.setBool("is_login", false);
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/splash-login', (route) => false);
+                  context, '/login', (route) => false);
             },
           ),
         ],

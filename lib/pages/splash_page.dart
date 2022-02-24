@@ -15,8 +15,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3),
-        () => Navigator.pushNamed(context, '/splash-login'));
+    Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/login'));
   }
 
   @override

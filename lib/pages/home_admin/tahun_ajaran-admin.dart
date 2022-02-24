@@ -1,25 +1,23 @@
 import 'package:apps/model/guru/guru_model.dart';
-import 'package:apps/pages/home_guru/navbar_guru.dart';
+import 'package:apps/pages/home_admin/navbar_admin.dart';
 import 'package:apps/provider/guru/ajaran_provider.dart';
 import 'package:apps/provider/guru/auth_guru_provider.dart';
-import 'package:apps/provider/guru/jadwal_provider.dart';
-import 'package:apps/widget/ajaran_daftar.dart';
 import 'package:apps/widget/ajaran_nilai.dart';
-import 'package:apps/widget/ajaran_soal.dart';
+import 'package:apps/widget/ajaran_nilaiAdmin.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../theme.dart';
 
-class DaftarAjaranNilaiPage extends StatefulWidget {
-  const DaftarAjaranNilaiPage({Key key}) : super(key: key);
+class TahunAjaranAdmin extends StatefulWidget {
+  const TahunAjaranAdmin({Key key}) : super(key: key);
 
   @override
-  _DaftarAjaranNilaiPageState createState() => _DaftarAjaranNilaiPageState();
+  _TahunAjaranAdminState createState() => _TahunAjaranAdminState();
 }
 
-class _DaftarAjaranNilaiPageState extends State<DaftarAjaranNilaiPage> {
+class _TahunAjaranAdminState extends State<TahunAjaranAdmin> {
   ProgressDialog pr;
   @override
   Widget build(BuildContext context) {
@@ -60,7 +58,7 @@ class _DaftarAjaranNilaiPageState extends State<DaftarAjaranNilaiPage> {
             ? Text("tidak ada data")
             : Column(
                 children: ajaranProvider.ajaran
-                    .map((ajaran) => AjaranNilai(ajaran))
+                    .map((ajaran) => AjaranNilaiAdmin(ajaran))
                     .toList(),
               ),
       );
@@ -70,7 +68,7 @@ class _DaftarAjaranNilaiPageState extends State<DaftarAjaranNilaiPage> {
       backgroundColor: backgroundColor6,
       resizeToAvoidBottomInset: false,
       appBar: header(),
-      drawer: NavbarGuru(),
+      drawer: NavbarAdmin(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

@@ -42,6 +42,153 @@ class _IndexAdminState extends State<IndexAdmin> {
           color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
     );
 
+    Card makeDashboarddatasiswa() {
+      return Card(
+          elevation: 1.0,
+          margin: new EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: birutuaColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 17),
+                      blurRadius: 23,
+                      spreadRadius: -13,
+                      color: blackColor)
+                ]),
+            child: new InkWell(
+              onTap: () async {
+                pr.show();
+                if (await adminProvider.get_siswa()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/data-siswa');
+                } else {
+                  pr.hide();
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  SizedBox(height: 50.0),
+                  Center(
+                      child: Icon(
+                    FontAwesomeIcons.laptopCode,
+                    size: 40.0,
+                    color: Colors.black,
+                  )),
+                  SizedBox(height: 20.0),
+                  new Center(
+                    child: new Text('Data Siswa',
+                        style:
+                            new TextStyle(fontSize: 18.0, color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ));
+    }
+
+    Card makeDashboarddataGuru() {
+      return Card(
+          elevation: 1.0,
+          margin: new EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: birutuaColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 17),
+                      blurRadius: 23,
+                      spreadRadius: -13,
+                      color: blackColor)
+                ]),
+            child: new InkWell(
+              onTap: () async {
+                pr.show();
+                if (await adminProvider.get_guru()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/data-guru');
+                } else {
+                  pr.hide();
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  SizedBox(height: 50.0),
+                  Center(
+                      child: Icon(
+                    FontAwesomeIcons.laptopCode,
+                    size: 40.0,
+                    color: Colors.black,
+                  )),
+                  SizedBox(height: 20.0),
+                  new Center(
+                    child: new Text('Data Guru',
+                        style:
+                            new TextStyle(fontSize: 18.0, color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ));
+    }
+
+    Card makeDashboardnilai() {
+      return Card(
+          elevation: 1.0,
+          margin: new EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: birutuaColor,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 17),
+                      blurRadius: 23,
+                      spreadRadius: -13,
+                      color: blackColor)
+                ]),
+            child: new InkWell(
+              onTap: () async {
+                pr.show();
+                if (await ajaranProvider.getajaran()) {
+                  pr.hide();
+                  Navigator.pushNamed(context, '/tahun-ajaran-admin');
+                } else {
+                  pr.hide();
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  SizedBox(height: 50.0),
+                  Center(
+                      child: Icon(
+                    FontAwesomeIcons.laptopCode,
+                    size: 40.0,
+                    color: Colors.black,
+                  )),
+                  SizedBox(height: 20.0),
+                  new Center(
+                    child: new Text('Nilai',
+                        style:
+                            new TextStyle(fontSize: 18.0, color: Colors.black)),
+                  )
+                ],
+              ),
+            ),
+          ));
+    }
+
     Card makeDashboardJadwal() {
       return Card(
           elevation: 1.0,
@@ -109,9 +256,9 @@ class _IndexAdminState extends State<IndexAdmin> {
             child: new InkWell(
               onTap: () async {
                 pr.show();
-                if (await adminProvider.get_siswa()) {
+                if (await adminProvider.get_guru()) {
                   pr.hide();
-                  Navigator.pushNamed(context, '/daftar-siswa-admin');
+                  Navigator.pushNamed(context, '/daftar-guru');
                 } else {
                   pr.hide();
                 }
@@ -139,6 +286,7 @@ class _IndexAdminState extends State<IndexAdmin> {
             ),
           ));
     }
+
     Card makeDashboardKalender() {
       return Card(
           elevation: 1.0,
@@ -201,8 +349,11 @@ class _IndexAdminState extends State<IndexAdmin> {
           crossAxisCount: 2,
           padding: EdgeInsets.all(3.0),
           children: <Widget>[
+            makeDashboarddataGuru(),
+            makeDashboarddatasiswa(),
             makeDashboardJadwal(),
             makeDashboardSoal(),
+            makeDashboardnilai(),
             makeDashboardKalender()
           ],
         ),
